@@ -14,7 +14,7 @@ Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.c
 - Designed to be used with gtk3 >= 3.16 and gtksourceview >=3.18-4
 - Be sure you have [gotk3](https://github.com/gotk3/gotk3/wiki#installation) installed correctly and working right.
 - Use classic command: `go get github.com/hfmrow/gotk3_gtksource/source`
-- Golang GtkSourceView follow the same rules that gtk3 for compiling differents version of gtksourceview.
+- Golang GtkSourceView follow the same rules that gotk3 for compiling differents version of gtksourceview.
 
 > ##### [libgtksourceview](https://packages.ubuntu.com/search?lang=en&keywords=libgtksourceview) Versions information:
 > 
