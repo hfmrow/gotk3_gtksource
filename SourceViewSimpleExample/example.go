@@ -25,7 +25,6 @@ import (
 	source "github.com/hfmrow/gotk3_gtksource/source"
 	// otherwise you will have compilation errors
 
-	"github.com/gotk3/gotk3/gdk"
 	"github.com/gotk3/gotk3/gtk"
 )
 
@@ -61,7 +60,8 @@ var (
 	tag *gtk.TextTag
 
 	currStyle,
-	currLang string
+	currLang,
+	filename string
 )
 
 func main() {
@@ -90,7 +90,8 @@ func main() {
 	currLang = "go-hfmrow"
 	getSourceComp()
 
-	textDisplay("example.go")
+	filename = "example.go"
+	textDisplay(filename)
 
 	gtk.Main()
 }
@@ -112,7 +113,7 @@ func setupWindow(title string) *gtk.Window {
 		gtk.MainQuit()
 	})
 	win.SetPosition(gtk.WIN_POS_CENTER)
-	width, height := 640, 720
+	width, height := 800, 600
 	win.SetDefaultSize(width, height)
 
 	// Box that contain others objects
@@ -311,24 +312,16 @@ func getSourceComp() {
 // textDisplay: populate SourceView
 func textDisplay(file ...string) {
 	var err error
-	var filename string
+	var fName string
 	var ok bool
 
 	if len(file) > 0 {
-		filename = file[0]
+		fName = file[0]
 	}
 
-	if _, err = os.Stat(filename); os.IsNotExist(err) {
+	if _, err = os.Stat(fName); os.IsNotExist(err) {
 
-		filename, ok, err = FileChooser(win, "save", "Open file", "gtk.goo", FCOptions{
-			KeepAbove:     false,
-			PreviewImages: false,
-			Modal:         false,
-			AskOverwrite:  false,
-			Button1:       "Cancel",
-			Button2:       "Ok",
-		})
-
+		filename, ok, err = FileChooser("gtk.goo")
 	} else {
 		ok = true
 	}
@@ -430,29 +423,18 @@ func initCheckButtons() {
 
 // CssWidgetLoad: Load or read from data and apply css to
 // widget if provided. Apply to screen otherwise.
-func CssWdgScnLoad(filename string, wdgt ...*gtk.Widget) {
+func CssWdgScnLoad(css string, wdgt *gtk.Widget) {
 
 	var err error
 	var cssProv *gtk.CssProvider
-	data := filename
-
-	if bytes, err := ioutil.ReadFile(filename); err == nil {
-		data = string(bytes)
-	}
 
 	if cssProv, err = gtk.CssProviderNew(); err == nil {
 
-		if err = cssProv.LoadFromData(data); err == nil {
-			if len(wdgt) == 0 {
-				var screen *gdk.Screen
-				if screen, err = gdk.ScreenGetDefault(); err == nil {
-					gtk.AddProviderForScreen(screen, cssProv, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-				}
-			} else {
-				var styleContext *gtk.StyleContext
-				if styleContext, err = wdgt[0].GetStyleContext(); err == nil {
-					styleContext.AddProvider(cssProv, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-				}
+		if err = cssProv.LoadFromData(css); err == nil {
+			var styleContext *gtk.StyleContext
+
+			if styleContext, err = wdgt.GetStyleContext(); err == nil {
+				styleContext.AddProvider(cssProv, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 			}
 		}
 	}
@@ -461,119 +443,21 @@ func CssWdgScnLoad(filename string, wdgt ...*gtk.Widget) {
 	}
 }
 
-/****************************
-* FileChooser implementation.
- ****************************/
-type FCOptions struct {
-	KeepAbove,
-	PreviewImages,
-	Modal,
-	AskOverwrite bool
-	Button1,
-	Button2 string
-}
-
 // FileChooser: Display a file chooser dialog with options
-func FileChooser(window *gtk.Window, dlgType, title, filename string, options ...interface{}) (outFilename string, result bool, err error) {
-	var FileChooserAction = map[string]gtk.FileChooserAction{
-		"select-folder": gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
-		"create-folder": gtk.FILE_CHOOSER_ACTION_CREATE_FOLDER,
-		"open":          gtk.FILE_CHOOSER_ACTION_OPEN,
-		"save":          gtk.FILE_CHOOSER_ACTION_SAVE,
-	}
-	var folder bool
+func FileChooser(filename string) (outFilename string, result bool, err error) {
 	var fileChooser *gtk.FileChooserDialog
-	var opt = FCOptions{ // options set default
-		KeepAbove:     true,
-		PreviewImages: false,
-		Modal:         true,
-		AskOverwrite:  true,
-		Button1:       "Cancel",
-		Button2:       "Ok",
-	}
 
-	if len(options) > 0 {
-		switch opts := options[0].(type) {
-		case FCOptions:
-			opt = opts
-			// To avoid breaking previous implementation
-		case bool:
-			switch len(options) {
-			case 1:
-				opt.KeepAbove = options[0].(bool)
-			case 2:
-				opt.KeepAbove = options[0].(bool)
-				opt.PreviewImages = options[1].(bool)
-			case 3:
-				opt.KeepAbove = options[0].(bool)
-				opt.PreviewImages = options[1].(bool)
-				opt.Modal = options[2].(bool)
-			case 4:
-				opt.KeepAbove = options[0].(bool)
-				opt.PreviewImages = options[1].(bool)
-				opt.Modal = options[2].(bool)
-				opt.AskOverwrite = options[3].(bool)
-			}
-		}
-	}
-
-	if len(title) == 0 {
-		switch dlgType {
-		case "create-folder":
-			title = "Create folder"
-			folder = true
-		case "select-folder":
-			title = "Select directory"
-			folder = true
-		case "open":
-			title = "Select file to open"
-		case "save":
-			title = "Select file to save"
-		}
-	}
-
-	if fileChooser, err = gtk.FileChooserDialogNewWith2Buttons(title, window, FileChooserAction[dlgType],
-		opt.Button1, gtk.RESPONSE_CANCEL, opt.Button2, gtk.RESPONSE_ACCEPT); err != nil {
+	if fileChooser, err = gtk.FileChooserDialogNewWith2Buttons("Choose file", win, gtk.FILE_CHOOSER_ACTION_SAVE,
+		"Cancel", gtk.RESPONSE_CANCEL, "Ok", gtk.RESPONSE_ACCEPT); err != nil {
 		return
 	}
 
-	if opt.PreviewImages {
-		if previewImage, err := gtk.ImageNew(); err == nil {
-			previewImage.Show()
-			var pixbuf *gdk.Pixbuf
-			fileChooser.SetPreviewWidget(previewImage)
-			fileChooser.Connect("update-preview", func(fc *gtk.FileChooserDialog) {
-				if _, err = os.Stat(fc.GetFilename()); !os.IsNotExist(err) {
-					if pixbuf, err = gdk.PixbufNewFromFile(fc.GetFilename()); err == nil {
-						fileChooser.SetPreviewWidgetActive(true)
-						if pixbuf.GetWidth() > 640 || pixbuf.GetHeight() > 480 {
-							if pixbuf, err = gdk.PixbufNewFromFileAtScale(fc.GetFilename(), 200, 200, true); err != nil {
-								log.Fatalf("Image '%s' cannot be loaded, got error: %s", fc.GetFilename(), err.Error())
-							}
-						}
-						previewImage.SetFromPixbuf(pixbuf)
-					} else {
-						fileChooser.SetPreviewWidgetActive(false)
-					}
-				}
-			})
-		}
-	}
-
-	if dlgType == "save" {
-		fileChooser.SetCurrentName(filepath.Base(filename))
-	}
-
-	if folder {
-		fileChooser.SetCurrentFolder(filename)
-	} else {
-		fileChooser.SetCurrentFolder(filepath.Dir(filename))
-	}
-	fileChooser.SetDoOverwriteConfirmation(opt.AskOverwrite)
-	fileChooser.SetModal(opt.Modal)
+	fileChooser.SetCurrentName(filepath.Base(filename))
+	fileChooser.SetDoOverwriteConfirmation(false)
+	fileChooser.SetModal(true)
 	fileChooser.SetSkipPagerHint(true)
 	fileChooser.SetSkipTaskbarHint(true)
-	fileChooser.SetKeepAbove(opt.KeepAbove)
+	fileChooser.SetKeepAbove(false)
 
 	switch int(fileChooser.Run()) {
 	case -3:
