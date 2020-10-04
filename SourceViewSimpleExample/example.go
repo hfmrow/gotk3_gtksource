@@ -75,7 +75,7 @@ func main() {
 	win.ShowAll()
 
 	// Apply css for desired fonts to sourceView only
-	CssWdgScnLoad(`
+	CssWidget(`
 	* {font: 12px "Liberation Mono", sans-serif;
 	}
 	`, &sv.Widget)
@@ -150,7 +150,7 @@ func setupWindow(title string) *gtk.Window {
 		log.Fatal(err)
 	}
 
-	// GtkSourceView
+	// GtkSourceView implementation
 	if sv, err = source.SourceViewNew(); err == nil {
 		ma, mi, mc, _ := sv.GetVersion()
 
@@ -264,7 +264,7 @@ func refresh() {
 	getSourceComp()
 }
 
-// getSourceComp: Get Source components
+// getSourceComp: Get GtkSourceView components (Style scheme and Language type)
 func getSourceComp() {
 	var err error
 
@@ -309,7 +309,7 @@ func getSourceComp() {
 	}
 }
 
-// textDisplay: populate SourceView
+// textDisplay: populate GtkSourceView
 func textDisplay(file ...string) {
 	var err error
 	var fName string
@@ -321,7 +321,7 @@ func textDisplay(file ...string) {
 
 	if _, err = os.Stat(fName); os.IsNotExist(err) {
 
-		filename, ok, err = FileChooser("gtk.goo")
+		filename, ok, err = FileChooser(fName)
 	} else {
 		ok = true
 	}
@@ -421,9 +421,8 @@ func initCheckButtons() {
 	}
 }
 
-// CssWidgetLoad: Load or read from data and apply css to
-// widget if provided. Apply to screen otherwise.
-func CssWdgScnLoad(css string, wdgt *gtk.Widget) {
+// CssWidget: read from data and apply css to widget.
+func CssWidget(css string, wdgt *gtk.Widget) {
 
 	var err error
 	var cssProv *gtk.CssProvider
@@ -443,7 +442,7 @@ func CssWdgScnLoad(css string, wdgt *gtk.Widget) {
 	}
 }
 
-// FileChooser: Display a file chooser dialog with options
+// FileChooser: Display a file chooser dialog.
 func FileChooser(filename string) (outFilename string, result bool, err error) {
 	var fileChooser *gtk.FileChooserDialog
 
