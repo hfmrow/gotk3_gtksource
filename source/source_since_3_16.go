@@ -40,10 +40,20 @@ func init() {
  * GtkSourceStyleSchemeChooser (full)
  * Interface implemented by widgets for choosing style schemes
  */
+type ISourceStyleSchemeChooser interface {
+	toGtkSourceStyleSchemeChooser() *C.GtkSourceStyleSchemeChooser
+}
 
 // SourceStyleSchemeChooser is a representation of GTK's GtkSourceStyleSchemeChooser.
 type SourceStyleSchemeChooser struct {
 	*glib.Object
+}
+
+func (v *SourceStyleSchemeChooser) toGtkSourceStyleSchemeChooser() *C.GtkSourceStyleSchemeChooser {
+	if v == nil {
+		return nil
+	}
+	return C.toGtkSourceStyleSchemeChooser(unsafe.Pointer(v.GObject))
 }
 
 // native returns a pointer to the underlying GtkSourceStyleSchemeChooser.
@@ -87,6 +97,7 @@ func (v *SourceStyleSchemeChooser) SetStyleScheme(scheme *SourceStyleScheme) {
 // SourceStyleSchemeChooserButton is a representation of GTK's GtkSourceStyleSchemeChooserButton.
 type SourceStyleSchemeChooserButton struct {
 	gtk.Button
+	SourceStyleSchemeChooser
 }
 
 // native returns a pointer to the underlying GtkSourceStyleSchemeChooserButton.
@@ -105,8 +116,9 @@ func marshalSourceStyleSchemeChooserButton(p uintptr) (interface{}, error) {
 }
 
 func wrapSourceStyleSchemeChooserButton(obj *glib.Object) *SourceStyleSchemeChooserButton {
-	actionable := &gtk.Actionable{obj}
-	return &SourceStyleSchemeChooserButton{gtk.Button{gtk.Bin{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}, actionable}}
+	c := wrapSourceStyleSchemeChooser(obj)
+	a := &gtk.Actionable{obj}
+	return &SourceStyleSchemeChooserButton{gtk.Button{gtk.Bin{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}, a}, *c}
 }
 
 // SourceStyleSchemeChooserButtonNew is a wrapper around gtk_source_style_scheme_chooser_button_new().
@@ -127,6 +139,7 @@ func SourceStyleSchemeChooserButtonNew() (*gtk.Widget, error) {
 // SourceStyleSchemeChooserWidget is a representation of GTK's GtkSourceStyleSchemeChooserWidget.
 type SourceStyleSchemeChooserWidget struct {
 	gtk.Bin
+	SourceStyleSchemeChooser
 }
 
 // native returns a pointer to the underlying GtkSourceStyleSchemeChooserWidget.
@@ -145,7 +158,8 @@ func marshalSourceStyleSchemeChooserWidget(p uintptr) (interface{}, error) {
 }
 
 func wrapSourceStyleSchemeChooserWidget(obj *glib.Object) *SourceStyleSchemeChooserWidget {
-	return &SourceStyleSchemeChooserWidget{gtk.Bin{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}}
+	c := wrapSourceStyleSchemeChooser(obj)
+	return &SourceStyleSchemeChooserWidget{gtk.Bin{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}, *c}
 }
 
 // SourceStyleSchemeChooserWidgetNew is a wrapper around gtk_source_style_scheme_chooser_widget_new().

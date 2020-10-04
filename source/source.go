@@ -192,6 +192,10 @@ func marshalSourceBracketMatchType(p uintptr) (interface{}, error) {
  * GtkSourceBuffer (full)
  */
 
+type ISourceBuffer interface {
+	toGtkSourceBuffer() *C.GtkSourceBuffer
+}
+
 // SourceBuffer is a representation of GTK's GtkSourceBuffer.
 // Subclass of GtkTextBuffer
 type SourceBuffer struct {
@@ -203,6 +207,13 @@ func (v *SourceBuffer) toGtkTextBuffer() *C.GtkTextBuffer {
 		return nil
 	}
 	return C.toGtkTextBuffer(unsafe.Pointer(v.GObject))
+}
+
+func (v *SourceBuffer) toGtkSourceBuffer() *C.GtkSourceBuffer {
+	if v == nil {
+		return nil
+	}
+	return C.toGtkSourceBuffer(unsafe.Pointer(v.GObject))
 }
 
 // native returns a pointer to the underlying GtkSourceBuffer.
@@ -545,17 +556,28 @@ func (v *SourceBuffer) RemoveSourceMarks(start, end *gtk.TextIter, category stri
  * GtkSourceView (full)
  */
 
+type ISourceView interface {
+	toGtkSourceView() *C.GtkSourceView
+}
+
 // SourceView is a representation of GTK's GtkSourceView
 // Subclass of GtkTextView
 type SourceView struct {
 	gtk.TextView
 }
 
-func (v *SourceView) toTextView() *C.GtkTextView {
+func (v *SourceView) toGtkTextView() *C.GtkTextView {
 	if v == nil {
 		return nil
 	}
 	return C.toGtkTextView(unsafe.Pointer(v.GObject))
+}
+
+func (v *SourceView) toGtkSourceView() *C.GtkSourceView {
+	if v == nil {
+		return nil
+	}
+	return C.toGtkSourceView(unsafe.Pointer(v.GObject))
 }
 
 // native returns a pointer to the underlying GtkSourceView.
@@ -595,7 +617,7 @@ func SourceViewNewWithBuffer(buf *SourceBuffer) (*SourceView, error) {
 // GetBuffer overriding gtk_text_view_get_buffer() to get a GtkSourceBuffer
 // from a GtkSourceView
 func (v *SourceView) GetBuffer() (*SourceBuffer, error) {
-	c := C.gtk_text_view_get_buffer(v.toTextView())
+	c := C.gtk_text_view_get_buffer(v.toGtkTextView())
 	if c == nil {
 		return nil, nilPtrErr
 	}
@@ -605,7 +627,7 @@ func (v *SourceView) GetBuffer() (*SourceBuffer, error) {
 // SetBuffer overriding gtk_text_view_set_buffer() to set a GtkSourceBuffer
 // to a GtkSourceView
 func (v *SourceView) SetBuffer(buffer *SourceBuffer) {
-	C.gtk_text_view_set_buffer(v.toTextView(), buffer.toGtkTextBuffer())
+	C.gtk_text_view_set_buffer(v.toGtkTextView(), buffer.toGtkTextBuffer())
 }
 
 // GetCompletion is a wrapper around gtk_source_view_get_completion().
