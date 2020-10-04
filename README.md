@@ -22,13 +22,13 @@ Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.c
 
 > ##### Library Installation (Ubuntu):
 > 
-> [**xenial (16.04LTS)**](https://packages.ubuntu.com/xenial/libgtksourceview-3.0-dev), [**bionic (18.04LTS)**](https://packages.ubuntu.com/bionic/libgtksourceview-3.0-dev)
+> ##### [**xenial (16.04LTS)**](https://packages.ubuntu.com/xenial/libgtksourceview-3.0-dev), [**bionic (18.04LTS)**](https://packages.ubuntu.com/bionic/libgtksourceview-3.0-dev)
 > 
 > ```bash
 > $ sudo apt install libgtksourceview-3.0-dev
 > ```
 > 
-> ###### [focal (20.04LTS)](https://packages.ubuntu.com/focal/libgtksourceview-4-dev) this version of Ubuntu may use libgtksourceview-3.0-dev too
+> ##### [**focal (20.04LTS)**](https://packages.ubuntu.com/focal/libgtksourceview-4-dev) this version of Ubuntu may use libgtksourceview-3.0-dev too
 > 
 > ```bash
 > $ sudo apt install libgtksourceview-4-dev
