@@ -164,4 +164,4 @@ Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.c
 
 ---
 
-(*****) Why Ubuntu Linux only ... because i really don't know how to explain and deploy it on window and darwin, i'm sorry. If you are able to doing that, you're welcome. All information are available at [Ubuntu - libgtksourceview](https://packages.ubuntu.com/search?lang=en&keywords=libgtksourceview). Theoretically, **sourceview 4** may work on amd64 arm64 armhf i386 ppc64el s390x, **sourceview 3.0** amd64 arm64 armhf i386 powerpc ppc64el s390x both depending on OS version.
+**(*)** Why Ubuntu Linux only ... because i really don't know how to explain and deploy it on window and darwin, i'm sorry. If you are able to doing that, you're welcome. All information are available at [Ubuntu - libgtksourceview](https://packages.ubuntu.com/search?lang=en&keywords=libgtksourceview). Theoretically, **sourceview 4** may work on amd64 arm64 armhf i386 ppc64el s390x, **sourceview 3.0** amd64 arm64 armhf i386 powerpc ppc64el s390x both depending on OS version.
