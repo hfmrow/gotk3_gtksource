@@ -1,4 +1,5 @@
 # Golang GtkSourceView binding for use with gotk3
+All this project was made under MIT license(**\***)
 
 This repository must be used with [gotk3: Go bindings for GTK3](https://github.com/gotk3/gotk3) only.
 
@@ -10,7 +11,7 @@ Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.c
 
 ##### installation:
 
-- Ubuntu linux only* see at bottom why.
+- Ubuntu linux only(**\*\***) see at bottom why.
 - Designed to be used with gtk3 >= 3.16 and gtksourceview >=3.18-4
 - Be sure you have latest [gotk3](https://github.com/gotk3/gotk3/wiki#installation) installed correctly and working right.
 - Use classic command: `go get github.com/hfmrow/gotk3_gtksource/source` for current Gtk3 v3.24, (Ubuntu focal). See below for specific versions
@@ -159,9 +160,9 @@ Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.c
 - [x] [GtkSourceFileSaver](https://developer.gnome.org/gtksourceview/stable/GtkSourceFileSaver.html) — Save a GtkSourceBuffer into a file
 
 ---
-
 #### Informations, Documentation: [GtkSourceView](https://developer.gnome.org/gtksourceview/4.2/)
-
 ---
 
-**(*)** Why Ubuntu Linux only ... because i really don't know how to explain and deploy it on window, darwin and other Linux distros, i'm sorry. If you are able to doing that, you're welcome. All information are available at [Ubuntu - libgtksourceview](https://packages.ubuntu.com/search?lang=en&keywords=libgtksourceview). Theoretically, **sourceview 4** may work on amd64 arm64 armhf i386 ppc64el s390x, **sourceview 3.0** amd64 arm64 armhf i386 powerpc ppc64el s390x both depending on OS version.
+**(\*)** Why the MIT license, simply because the ISC license type is not available in the repository creation choices. This repository is designed in the spirit of the original definition of the gotk3 [LICENSE](https://github.com/gotk3/gotk3/blob/master/LICENSE) before this one.
+
+**(\*\*)** Why Ubuntu Linux only ... because i really don't know how to explain and deploy it on window, darwin and other Linux distros, i'm sorry. If you are able to doing that, you're welcome. All information are available at [Ubuntu - libgtksourceview](https://packages.ubuntu.com/search?lang=en&keywords=libgtksourceview). Theoretically, **sourceview 4** may work on amd64 arm64 armhf i386 ppc64el s390x, **sourceview 3.0** amd64 arm64 armhf i386 powerpc ppc64el s390x both depending on OS version.
