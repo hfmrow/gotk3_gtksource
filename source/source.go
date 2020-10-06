@@ -236,7 +236,7 @@ func wrapSourceBuffer(obj *glib.Object) *SourceBuffer {
 }
 
 // ToTextBuffer returns a *TextBuffer
-// may be used with completionWords
+// Some derived methods accept only a TextBuffer source as pointer
 func (v *SourceBuffer) ToTextBuffer() *gtk.TextBuffer {
 	return &gtk.TextBuffer{v.Object}
 }
@@ -597,6 +597,12 @@ func marshalSourceView(p uintptr) (interface{}, error) {
 
 func wrapSourceView(obj *glib.Object) *SourceView {
 	return &SourceView{gtk.TextView{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}}
+}
+
+// ToTextView returns a *TextView
+// Some derived methods accept only a TextView source as pointer
+func (v *SourceView) ToTextView() *gtk.TextView {
+	return &gtk.TextView{gtk.Container{gtk.Widget{glib.InitiallyUnowned{v.Object}}}}
 }
 
 // SourceViewNew is a wrapper around gtk_source_view_new ().

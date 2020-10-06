@@ -90,6 +90,47 @@ func (v *SourceStyleSchemeChooser) SetStyleScheme(scheme *SourceStyleScheme) {
 }
 
 /*
+ * GtkSourceStyleSchemeChooserWidget (full)
+ * A widget for choosing style schemes
+ */
+
+// SourceStyleSchemeChooserWidget is a representation of GTK's GtkSourceStyleSchemeChooserWidget.
+type SourceStyleSchemeChooserWidget struct {
+	gtk.Bin
+	SourceStyleSchemeChooser
+}
+
+// native returns a pointer to the underlying GtkSourceStyleSchemeChooserWidget.
+func (v *SourceStyleSchemeChooserWidget) native() *C.GtkSourceStyleSchemeChooserWidget {
+	if v == nil || v.GObject == nil {
+		return nil
+	}
+	p := unsafe.Pointer(v.GObject)
+	return C.toGtkSourceStyleSchemeChooserWidget(p)
+}
+
+func marshalSourceStyleSchemeChooserWidget(p uintptr) (interface{}, error) {
+	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
+	obj := glib.Take(unsafe.Pointer(c))
+	return wrapSourceStyleSchemeChooserWidget(obj), nil
+}
+
+func wrapSourceStyleSchemeChooserWidget(obj *glib.Object) *SourceStyleSchemeChooserWidget {
+	c := wrapSourceStyleSchemeChooser(obj)
+	return &SourceStyleSchemeChooserWidget{gtk.Bin{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}, *c}
+}
+
+// SourceStyleSchemeChooserWidgetNew is a wrapper around gtk_source_style_scheme_chooser_widget_new().
+func SourceStyleSchemeChooserWidgetNew() (*SourceStyleSchemeChooserWidget, error) {
+	c := C.gtk_source_style_scheme_chooser_widget_new()
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	obj := (glib.Take(unsafe.Pointer(c)))
+	return wrapSourceStyleSchemeChooserWidget(obj), nil
+}
+
+/*
  * GtkSourceStyleSchemeChooserButton (full)
  * A button to launch a style scheme selection dialog
  */
@@ -122,54 +163,13 @@ func wrapSourceStyleSchemeChooserButton(obj *glib.Object) *SourceStyleSchemeChoo
 }
 
 // SourceStyleSchemeChooserButtonNew is a wrapper around gtk_source_style_scheme_chooser_button_new().
-func SourceStyleSchemeChooserButtonNew() (*gtk.Widget, error) {
+func SourceStyleSchemeChooserButtonNew() (*SourceStyleSchemeChooserButton, error) {
 	c := C.gtk_source_style_scheme_chooser_button_new()
 	if c == nil {
 		return nil, nilPtrErr
 	}
 	obj := (glib.Take(unsafe.Pointer(c)))
-	return &gtk.Widget{glib.InitiallyUnowned{obj}}, nil
-}
-
-/*
- * GtkSourceStyleSchemeChooserWidget (full)
- * A widget for choosing style schemes
- */
-
-// SourceStyleSchemeChooserWidget is a representation of GTK's GtkSourceStyleSchemeChooserWidget.
-type SourceStyleSchemeChooserWidget struct {
-	gtk.Bin
-	SourceStyleSchemeChooser
-}
-
-// native returns a pointer to the underlying GtkSourceStyleSchemeChooserWidget.
-func (v *SourceStyleSchemeChooserWidget) native() *C.GtkSourceStyleSchemeChooserWidget {
-	if v == nil || v.GObject == nil {
-		return nil
-	}
-	p := unsafe.Pointer(v.GObject)
-	return C.toGtkSourceStyleSchemeChooserWidget(p)
-}
-
-func marshalSourceStyleSchemeChooserWidget(p uintptr) (interface{}, error) {
-	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
-	obj := glib.Take(unsafe.Pointer(c))
-	return wrapSourceStyleSchemeChooserWidget(obj), nil
-}
-
-func wrapSourceStyleSchemeChooserWidget(obj *glib.Object) *SourceStyleSchemeChooserWidget {
-	c := wrapSourceStyleSchemeChooser(obj)
-	return &SourceStyleSchemeChooserWidget{gtk.Bin{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}, *c}
-}
-
-// SourceStyleSchemeChooserWidgetNew is a wrapper around gtk_source_style_scheme_chooser_widget_new().
-func SourceStyleSchemeChooserWidgetNew() (*gtk.Widget, error) {
-	c := C.gtk_source_style_scheme_chooser_widget_new()
-	if c == nil {
-		return nil, nilPtrErr
-	}
-	obj := (glib.Take(unsafe.Pointer(c)))
-	return &gtk.Widget{glib.InitiallyUnowned{obj}}, nil
+	return wrapSourceStyleSchemeChooserButton(obj), nil
 }
 
 /*
