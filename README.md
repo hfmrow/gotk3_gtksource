@@ -1,11 +1,13 @@
 # Golang GtkSourceView binding for use with gotk3
+
 All this project was made under MIT license(**\***)
 
 This repository must be used with [gotk3: Go bindings for GTK3](https://github.com/gotk3/gotk3) only.
 
 ---
 
-Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.com/hfmrow/gotk3_gtksource/tree/main/SourceViewSimpleExample)
+- Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.com/hfmrow/gotk3_gtksource/tree/main/SourceViewSimpleExample)
+- Another more complex example will come soon
 
 ---
 
@@ -160,7 +162,9 @@ Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.c
 - [x] [GtkSourceFileSaver](https://developer.gnome.org/gtksourceview/stable/GtkSourceFileSaver.html) — Save a GtkSourceBuffer into a file
 
 ---
+
 #### Informations, Documentation: [GtkSourceView](https://developer.gnome.org/gtksourceview/4.2/)
+
 ---
 
 **(\*)** Why the MIT license, simply because the ISC license type is not available in the repository creation choices. This repository is designed in the spirit of the original definition of the gotk3 [LICENSE](https://github.com/gotk3/gotk3/blob/master/LICENSE) before this one.
