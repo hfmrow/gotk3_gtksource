@@ -18,19 +18,14 @@ import (
 	"os"
 	"path/filepath"
 
-	// NOTE: on 'import' statement, to avoid mistake beetween gtk and gtksourceview
-	// you must import it without package name:
-	. "github.com/hfmrow/gotk3_gtksource/source"
-	// or using a spécific name for:
-	source "github.com/hfmrow/gotk3_gtksource/source"
-	// otherwise you will have compilation errors
+	"github.com/hfmrow/gotk3_gtksource/source"
 
 	"github.com/gotk3/gotk3/gtk"
 )
 
 var (
-	sv     *SourceView // Just to see you, kind of naming authorized (check above, import rules)
-	buff   *SourceBuffer
+	sv     *source.SourceView // Just to see you, kind of naming authorized (check above, import rules)
+	buff   *source.SourceBuffer
 	slm    *source.SourceLanguageManager // second way to map library name (check above, import rules)
 	lng    *source.SourceLanguage
 	sssm   *source.SourceStyleSchemeManager
