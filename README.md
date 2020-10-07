@@ -1,6 +1,6 @@
 # Golang GtkSourceView binding for use with gotk3
 
-All this project was made under MIT license(**\***)
+All this project was made under MIT license **\***
 
 This repository must be used with [gotk3: Go bindings for GTK3](https://github.com/gotk3/gotk3) only.
 
