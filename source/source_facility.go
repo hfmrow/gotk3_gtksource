@@ -163,30 +163,11 @@ func toTextTag(c *C.GtkTextTag) *gtk.TextTag {
 // Here there are a few methods (the minimum possible) of glib, gio ...
 // which are needed to implement some methods in GtkSourceView for example.
 
-// for exported functions, an underscore is added at start to avoid a cgo multiple declaration error.
-
 /*
  * GAsyncReadyCallback for use inside gtk package
  *
  * Definition copied from the glib directory
  */
-
-//export _goAsyncReadyCallbacks
-func _goAsyncReadyCallbacks(sourceObject *C.GObject, res *C.GAsyncResult, userData C.gpointer) {
-	id := int(uintptr(userData))
-
-	asyncReadyCallbackRegistry.Lock()
-	r := asyncReadyCallbackRegistry.m[id]
-	//delete(asyncReadyCallbackRegistry.m, id)
-	asyncReadyCallbackRegistry.Unlock()
-
-	var source *glib.Object
-	if sourceObject != nil {
-		source = glib.Take(unsafe.Pointer(sourceObject))
-	}
-
-	r.fn(source, &glib.AsyncResult{glib.Take(unsafe.Pointer(res))}, r.userData)
-}
 
 // AsyncReadyCallback is a representation of GAsyncReadyCallback
 // type AsyncReadyCallback func(object *glib.Object, res *glib.AsyncResult, data uintptr)
@@ -216,3 +197,24 @@ func registerAsyncReadyCallback(fn glib.AsyncReadyCallback, userData uintptr) in
 	return id
 }
 
+/*
+ * Export
+ * for exported functions, an underscore is added at start to avoid a cgo multiple declaration error.
+ */
+
+//export _goAsyncReadyCallbacks
+func _goAsyncReadyCallbacks(sourceObject *C.GObject, res *C.GAsyncResult, userData C.gpointer) {
+	id := int(uintptr(userData))
+
+	asyncReadyCallbackRegistry.Lock()
+	r := asyncReadyCallbackRegistry.m[id]
+	//delete(asyncReadyCallbackRegistry.m, id)
+	asyncReadyCallbackRegistry.Unlock()
+
+	var source *glib.Object
+	if sourceObject != nil {
+		source = glib.Take(unsafe.Pointer(sourceObject))
+	}
+
+	r.fn(source, &glib.AsyncResult{glib.Take(unsafe.Pointer(res))}, r.userData)
+}

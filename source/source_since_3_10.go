@@ -18,6 +18,7 @@ package gtk
 import "C"
 import (
 	"errors"
+	"log"
 	"unsafe"
 
 	"github.com/gotk3/gotk3/glib"
@@ -150,28 +151,44 @@ func (v *SourceSearchContext) GetOccurencePosition(start, end *gtk.TextIter) int
 
 // ForwardAsync is a wrapper around gtk_source_search_context_forward_async().
 func (v *SourceSearchContext) ForwardAsync(
-	iter *gtk.TextIter, cancellable *glib.Cancellable, callback glib.AsyncReadyCallback, userData uintptr) {
-
+	iter *gtk.TextIter, cancellable *glib.Cancellable, callback glib.AsyncReadyCallback, userData ...uintptr) {
+	var userDataPtr uintptr
 	var c *C.GCancellable = nil
 
 	if cancellable != nil {
 		c = (*C.GCancellable)(unsafe.Pointer(cancellable.Native()))
 	}
-	id := registerAsyncReadyCallback(callback, userData)
+
+	switch {
+	case len(userData) == 1:
+		userDataPtr = userData[0]
+	case len(userData) > 1:
+		log.Fatal("ForwardAsync: Only one argument is allowed for userData.")
+	}
+
+	id := registerAsyncReadyCallback(callback, userDataPtr)
 
 	C._gtk_source_search_context_forward_async(v.native(), nativeTextIter(iter), c, C.gpointer(uintptr(id)))
 }
 
 // BackwardAsync is a wrapper around gtk_source_search_context_backward_async().
 func (v *SourceSearchContext) BackwardAsync(
-	iter *gtk.TextIter, cancellable *glib.Cancellable, callback glib.AsyncReadyCallback, userData uintptr) {
-
+	iter *gtk.TextIter, cancellable *glib.Cancellable, callback glib.AsyncReadyCallback, userData ...uintptr) {
+	var userDataPtr uintptr
 	var c *C.GCancellable = nil
 
 	if cancellable != nil {
 		c = (*C.GCancellable)(unsafe.Pointer(cancellable.Native()))
 	}
-	id := registerAsyncReadyCallback(callback, userData)
+
+	switch {
+	case len(userData) == 1:
+		userDataPtr = userData[0]
+	case len(userData) > 1:
+		log.Fatal("BackwardAsync: Only one argument is allowed for userData.")
+	}
+
+	id := registerAsyncReadyCallback(callback, userDataPtr)
 
 	C._gtk_source_search_context_backward_async(v.native(), nativeTextIter(iter), c, C.gpointer(uintptr(id)))
 }
