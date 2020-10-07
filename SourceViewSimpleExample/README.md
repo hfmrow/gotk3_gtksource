@@ -2,6 +2,5 @@
 
 - GtkSourceView basic demonstration.
 
-- 
 
 ![im](screen.png)
