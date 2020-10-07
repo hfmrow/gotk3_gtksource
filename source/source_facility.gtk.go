@@ -17,7 +17,7 @@ import (
 )
 
 /*
- * Gotk3 duplicate function / var
+ * Gotk3 duplicated function / var
  */
 
 func gbool(b bool) C.gboolean {

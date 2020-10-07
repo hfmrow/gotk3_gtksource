@@ -40,20 +40,10 @@ func init() {
  * GtkSourceStyleSchemeChooser (full)
  * Interface implemented by widgets for choosing style schemes
  */
-type ISourceStyleSchemeChooser interface {
-	toGtkSourceStyleSchemeChooser() *C.GtkSourceStyleSchemeChooser
-}
 
 // SourceStyleSchemeChooser is a representation of GTK's GtkSourceStyleSchemeChooser.
 type SourceStyleSchemeChooser struct {
 	*glib.Object
-}
-
-func (v *SourceStyleSchemeChooser) toGtkSourceStyleSchemeChooser() *C.GtkSourceStyleSchemeChooser {
-	if v == nil {
-		return nil
-	}
-	return C.toGtkSourceStyleSchemeChooser(unsafe.Pointer(v.GObject))
 }
 
 // native returns a pointer to the underlying GtkSourceStyleSchemeChooser.

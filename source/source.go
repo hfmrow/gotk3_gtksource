@@ -94,9 +94,9 @@ type SourceSmartHomeEndType int
 
 const (
 	SOURCE_SMART_HOME_END_DISABLED SourceSmartHomeEndType = C.GTK_SOURCE_SMART_HOME_END_DISABLED
-	SOURCE_SMART_HOME_END_BEFORE                          = C.GTK_SOURCE_SMART_HOME_END_BEFORE
-	SOURCE_SMART_HOME_END_AFTER                           = C.GTK_SOURCE_SMART_HOME_END_AFTER
-	SOURCE_SMART_HOME_END_ALWAYS                          = C.GTK_SOURCE_SMART_HOME_END_ALWAYS
+	SOURCE_SMART_HOME_END_BEFORE   SourceSmartHomeEndType = C.GTK_SOURCE_SMART_HOME_END_BEFORE
+	SOURCE_SMART_HOME_END_AFTER    SourceSmartHomeEndType = C.GTK_SOURCE_SMART_HOME_END_AFTER
+	SOURCE_SMART_HOME_END_ALWAYS   SourceSmartHomeEndType = C.GTK_SOURCE_SMART_HOME_END_ALWAYS
 )
 
 func marshalSourceSmartHomeEndType(p uintptr) (interface{}, error) {
@@ -109,7 +109,7 @@ type SourceViewGutterPosition int
 
 const (
 	SOURCE_VIEW_GUTTER_POSITION_LINES SourceViewGutterPosition = C.GTK_SOURCE_VIEW_GUTTER_POSITION_LINES
-	SOURCE_VIEW_GUTTER_POSITION_MARKS                          = C.GTK_SOURCE_VIEW_GUTTER_POSITION_MARKS
+	SOURCE_VIEW_GUTTER_POSITION_MARKS SourceViewGutterPosition = C.GTK_SOURCE_VIEW_GUTTER_POSITION_MARKS
 )
 
 func marshalSourceViewGutterPosition(p uintptr) (interface{}, error) {
@@ -122,7 +122,7 @@ type SourceCompletionError int
 
 const (
 	SOURCE_COMPLETION_ERROR_ALREADY_BOUND SourceCompletionError = C.GTK_SOURCE_COMPLETION_ERROR_ALREADY_BOUND
-	SOURCE_COMPLETION_ERROR_NOT_BOUND                           = C.GTK_SOURCE_COMPLETION_ERROR_NOT_BOUND
+	SOURCE_COMPLETION_ERROR_NOT_BOUND     SourceCompletionError = C.GTK_SOURCE_COMPLETION_ERROR_NOT_BOUND
 )
 
 func marshalSourceCompletionError(p uintptr) (interface{}, error) {
@@ -135,8 +135,8 @@ type SourceCompletionActivation int
 
 const (
 	SOURCE_COMPLETION_ACTIVATION_NONE           SourceCompletionActivation = C.GTK_SOURCE_COMPLETION_ACTIVATION_NONE
-	SOURCE_COMPLETION_ACTIVATION_INTERACTIVE                               = C.GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE
-	SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED                            = C.GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED
+	SOURCE_COMPLETION_ACTIVATION_INTERACTIVE    SourceCompletionActivation = C.GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE
+	SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED SourceCompletionActivation = C.GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED
 )
 
 func marshalSourceCompletionActivation(p uintptr) (interface{}, error) {
@@ -149,9 +149,9 @@ type SourceGutterRendererState int
 
 const (
 	SOURCE_GUTTER_RENDERER_STATE_NORMAL   SourceGutterRendererState = C.GTK_SOURCE_GUTTER_RENDERER_STATE_NORMAL
-	SOURCE_GUTTER_RENDERER_STATE_CURSOR                             = C.GTK_SOURCE_GUTTER_RENDERER_STATE_CURSOR
-	SOURCE_GUTTER_RENDERER_STATE_PRELIT                             = C.GTK_SOURCE_GUTTER_RENDERER_STATE_PRELIT
-	SOURCE_GUTTER_RENDERER_STATE_SELECTED                           = C.GTK_SOURCE_GUTTER_RENDERER_STATE_SELECTED
+	SOURCE_GUTTER_RENDERER_STATE_CURSOR   SourceGutterRendererState = C.GTK_SOURCE_GUTTER_RENDERER_STATE_CURSOR
+	SOURCE_GUTTER_RENDERER_STATE_PRELIT   SourceGutterRendererState = C.GTK_SOURCE_GUTTER_RENDERER_STATE_PRELIT
+	SOURCE_GUTTER_RENDERER_STATE_SELECTED SourceGutterRendererState = C.GTK_SOURCE_GUTTER_RENDERER_STATE_SELECTED
 )
 
 func marshalSourceGutterRendererState(p uintptr) (interface{}, error) {
@@ -164,8 +164,8 @@ type SourceGutterRendererAlignmentMode int
 
 const (
 	SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_CELL  SourceGutterRendererAlignmentMode = C.GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_CELL
-	SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST                                   = C.GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST
-	SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST                                    = C.GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST
+	SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST SourceGutterRendererAlignmentMode = C.GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST
+	SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST  SourceGutterRendererAlignmentMode = C.GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST
 )
 
 func marshalSourceGutterRendererAlignmentMode(p uintptr) (interface{}, error) {
@@ -178,9 +178,9 @@ type SourceBracketMatchType int
 
 const (
 	SOURCE_BRACKET_MATCH_NONE         SourceBracketMatchType = C.GTK_SOURCE_BRACKET_MATCH_NONE
-	SOURCE_BRACKET_MATCH_OUT_OF_RANGE                        = C.GTK_SOURCE_BRACKET_MATCH_OUT_OF_RANGE
-	SOURCE_BRACKET_MATCH_NOT_FOUND                           = C.GTK_SOURCE_BRACKET_MATCH_NOT_FOUND
-	SOURCE_BRACKET_MATCH_FOUND                               = C.GTK_SOURCE_BRACKET_MATCH_FOUND
+	SOURCE_BRACKET_MATCH_OUT_OF_RANGE SourceBracketMatchType = C.GTK_SOURCE_BRACKET_MATCH_OUT_OF_RANGE
+	SOURCE_BRACKET_MATCH_NOT_FOUND    SourceBracketMatchType = C.GTK_SOURCE_BRACKET_MATCH_NOT_FOUND
+	SOURCE_BRACKET_MATCH_FOUND        SourceBracketMatchType = C.GTK_SOURCE_BRACKET_MATCH_FOUND
 )
 
 func marshalSourceBracketMatchType(p uintptr) (interface{}, error) {
@@ -191,10 +191,6 @@ func marshalSourceBracketMatchType(p uintptr) (interface{}, error) {
 /*
  * GtkSourceBuffer (full)
  */
-
-type ISourceBuffer interface {
-	toGtkSourceBuffer() *C.GtkSourceBuffer
-}
 
 // SourceBuffer is a representation of GTK's GtkSourceBuffer.
 // Subclass of GtkTextBuffer
@@ -207,13 +203,6 @@ func (v *SourceBuffer) toGtkTextBuffer() *C.GtkTextBuffer {
 		return nil
 	}
 	return C.toGtkTextBuffer(unsafe.Pointer(v.GObject))
-}
-
-func (v *SourceBuffer) toGtkSourceBuffer() *C.GtkSourceBuffer {
-	if v == nil {
-		return nil
-	}
-	return C.toGtkSourceBuffer(unsafe.Pointer(v.GObject))
 }
 
 // native returns a pointer to the underlying GtkSourceBuffer.
@@ -556,10 +545,6 @@ func (v *SourceBuffer) RemoveSourceMarks(start, end *gtk.TextIter, category stri
  * GtkSourceView (full)
  */
 
-type ISourceView interface {
-	toGtkSourceView() *C.GtkSourceView
-}
-
 // SourceView is a representation of GTK's GtkSourceView
 // Subclass of GtkTextView
 type SourceView struct {
@@ -571,13 +556,6 @@ func (v *SourceView) toGtkTextView() *C.GtkTextView {
 		return nil
 	}
 	return C.toGtkTextView(unsafe.Pointer(v.GObject))
-}
-
-func (v *SourceView) toGtkSourceView() *C.GtkSourceView {
-	if v == nil {
-		return nil
-	}
-	return C.toGtkSourceView(unsafe.Pointer(v.GObject))
 }
 
 // native returns a pointer to the underlying GtkSourceView.
@@ -1186,6 +1164,95 @@ func (v *SourceStyle) Copy() (*SourceStyle, error) {
 }
 
 /*
+ * GtkSourceMark (full)
+ */
+
+// SourceMark is a representation of GTK's GtkSourceMark.
+// Mark object for GtkSourceBuffer
+type SourceMark struct {
+	gtk.TextMark
+}
+
+func (v *SourceMark) toTextMark() *C.GtkTextMark {
+	if v == nil {
+		return nil
+	}
+	return C.toGtkTextMark(unsafe.Pointer(v.GObject))
+}
+
+// native returns a pointer to the underlying GtkSourceStyleSchemeManager.
+func (v *SourceMark) native() *C.GtkSourceMark {
+	if v == nil || v.GObject == nil {
+		return nil
+	}
+	p := unsafe.Pointer(v.GObject)
+	return C.toGtkSourceMark(p)
+}
+
+func marshalSourceMark(p uintptr) (interface{}, error) {
+	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
+	obj := glib.Take(unsafe.Pointer(c))
+	return wrapSourceMark(obj), nil
+}
+
+func wrapSourceMark(obj *glib.Object) *SourceMark {
+	return &SourceMark{gtk.TextMark{obj}}
+}
+
+// SourceMarkNew is a wrapper around gtk_source_mark_new().
+func SourceMarkNew(name, category string) (*SourceMark, error) {
+	cstr := C.CString(name)
+	defer C.free(unsafe.Pointer(cstr))
+	cstr1 := C.CString(category)
+	defer C.free(unsafe.Pointer(cstr1))
+
+	c := C.gtk_source_mark_new((*C.gchar)(cstr), (*C.gchar)(cstr1))
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	return wrapSourceMark(glib.Take(unsafe.Pointer(c))), nil
+}
+
+// GetBuffer overriding gtk_text_mark_get_buffer() to get a
+// GtkSourceBuffer from a GtkSourceMark
+func (v *SourceMark) GetBuffer() (*SourceBuffer, error) {
+	c := C.gtk_text_mark_get_buffer(v.toTextMark())
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	return wrapSourceBuffer(glib.Take(unsafe.Pointer(c))), nil
+}
+
+// GetCategory is a wrapper around gtk_source_mark_get_category().
+func (v *SourceMark) GetCategory() string {
+	return goString(C.gtk_source_mark_get_category(v.native()))
+}
+
+// Next is a wrapper around gtk_source_mark_next().
+func (v *SourceMark) Next(category string) (*SourceMark, error) {
+	cstr := C.CString(category)
+	defer C.free(unsafe.Pointer(cstr))
+
+	c := C.gtk_source_mark_next(v.native(), (*C.gchar)(cstr))
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	return wrapSourceMark(glib.Take(unsafe.Pointer(c))), nil
+}
+
+// Prev is a wrapper around gtk_source_mark_prev().
+func (v *SourceMark) Prev(category string) (*SourceMark, error) {
+	cstr := C.CString(category)
+	defer C.free(unsafe.Pointer(cstr))
+
+	c := C.gtk_source_mark_prev(v.native(), (*C.gchar)(cstr))
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	return wrapSourceMark(glib.Take(unsafe.Pointer(c))), nil
+}
+
+/*
  * GtkSourceMarkAttributes (full)
  */
 
@@ -1288,95 +1355,6 @@ func (v *SourceMarkAttributes) GetTooltipText(mark *SourceMark) string {
 // GetTooltipMarkup is a wrapper around gtk_source_mark_attributes_get_tooltip_markup().
 func (v *SourceMarkAttributes) GetTooltipMarkup(mark *SourceMark) string {
 	return goString(C.gtk_source_mark_attributes_get_tooltip_markup(v.native(), mark.native()))
-}
-
-/*
- * GtkSourceMark (full)
- */
-
-// SourceMark is a representation of GTK's GtkSourceMark.
-// Mark object for GtkSourceBuffer
-type SourceMark struct {
-	gtk.TextMark
-}
-
-func (v *SourceMark) toTextMark() *C.GtkTextMark {
-	if v == nil {
-		return nil
-	}
-	return C.toGtkTextMark(unsafe.Pointer(v.GObject))
-}
-
-// native returns a pointer to the underlying GtkSourceStyleSchemeManager.
-func (v *SourceMark) native() *C.GtkSourceMark {
-	if v == nil || v.GObject == nil {
-		return nil
-	}
-	p := unsafe.Pointer(v.GObject)
-	return C.toGtkSourceMark(p)
-}
-
-func marshalSourceMark(p uintptr) (interface{}, error) {
-	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
-	obj := glib.Take(unsafe.Pointer(c))
-	return wrapSourceMark(obj), nil
-}
-
-func wrapSourceMark(obj *glib.Object) *SourceMark {
-	return &SourceMark{gtk.TextMark{obj}}
-}
-
-// GetBuffer overriding gtk_text_mark_get_buffer() to get a
-// GtkSourceBuffer from a GtkSourceMark
-func (v *SourceMark) GetBuffer() (*SourceBuffer, error) {
-	c := C.gtk_text_mark_get_buffer(v.toTextMark())
-	if c == nil {
-		return nil, nilPtrErr
-	}
-	return wrapSourceBuffer(glib.Take(unsafe.Pointer(c))), nil
-}
-
-// SourceMarkNew is a wrapper around gtk_source_mark_new().
-func SourceMarkNew(name, category string) (*SourceMark, error) {
-	cstr := C.CString(name)
-	defer C.free(unsafe.Pointer(cstr))
-	cstr1 := C.CString(category)
-	defer C.free(unsafe.Pointer(cstr1))
-
-	c := C.gtk_source_mark_new((*C.gchar)(cstr), (*C.gchar)(cstr1))
-	if c == nil {
-		return nil, nilPtrErr
-	}
-	return wrapSourceMark(glib.Take(unsafe.Pointer(c))), nil
-}
-
-// GetCategory is a wrapper around gtk_source_mark_get_category().
-func (v *SourceMark) GetCategory() string {
-	return goString(C.gtk_source_mark_get_category(v.native()))
-}
-
-// Next is a wrapper around gtk_source_mark_next().
-func (v *SourceMark) Next(category string) (*SourceMark, error) {
-	cstr := C.CString(category)
-	defer C.free(unsafe.Pointer(cstr))
-
-	c := C.gtk_source_mark_next(v.native(), (*C.gchar)(cstr))
-	if c == nil {
-		return nil, nilPtrErr
-	}
-	return wrapSourceMark(glib.Take(unsafe.Pointer(c))), nil
-}
-
-// Prev is a wrapper around gtk_source_mark_prev().
-func (v *SourceMark) Prev(category string) (*SourceMark, error) {
-	cstr := C.CString(category)
-	defer C.free(unsafe.Pointer(cstr))
-
-	c := C.gtk_source_mark_prev(v.native(), (*C.gchar)(cstr))
-	if c == nil {
-		return nil, nilPtrErr
-	}
-	return wrapSourceMark(glib.Take(unsafe.Pointer(c))), nil
 }
 
 /*
@@ -1923,7 +1901,7 @@ func (v *SourceGutter) GetRendererAtPos(x, y int) (*SourceGutterRenderer, error)
 // SourceGutterRenderer is a representation of GTK's GtkSourceGutterRenderer.
 // Gutter cell renderer
 type SourceGutterRenderer struct {
-	*glib.Object
+	glib.InitiallyUnowned
 }
 
 // native returns a pointer to the underlying GtkSourceGutterRenderer.
@@ -1942,7 +1920,7 @@ func marshalSourceGutterRenderer(p uintptr) (interface{}, error) {
 }
 
 func wrapSourceGutterRenderer(obj *glib.Object) *SourceGutterRenderer {
-	return &SourceGutterRenderer{obj}
+	return &SourceGutterRenderer{glib.InitiallyUnowned{obj}}
 }
 
 // Begin is a wrapper around gtk_source_gutter_renderer_begin().
@@ -2131,7 +2109,7 @@ func marshalSourceGutterRendererPixbuf(p uintptr) (interface{}, error) {
 }
 
 func wrapSourceGutterRendererPixbuf(obj *glib.Object) *SourceGutterRendererPixbuf {
-	return &SourceGutterRendererPixbuf{SourceGutterRenderer{obj}}
+	return &SourceGutterRendererPixbuf{SourceGutterRenderer{glib.InitiallyUnowned{obj}}}
 }
 
 // SourceGutterRendererPixbufNew is a wrapper around gtk_source_gutter_renderer_pixbuf_new().
@@ -2140,6 +2118,7 @@ func SourceGutterRendererPixbufNew() (*SourceGutterRendererPixbuf, error) {
 	if c == nil {
 		return nil, nilPtrErr
 	}
+
 	return wrapSourceGutterRendererPixbuf(glib.Take(unsafe.Pointer(c))), nil
 }
 
@@ -2205,7 +2184,7 @@ func marshalSourceGutterRendererText(p uintptr) (interface{}, error) {
 }
 
 func wrapSourceGutterRendererText(obj *glib.Object) *SourceGutterRendererText {
-	return &SourceGutterRendererText{SourceGutterRenderer{obj}}
+	return &SourceGutterRendererText{SourceGutterRenderer{glib.InitiallyUnowned{obj}}}
 }
 
 // SourceGutterRendererTextNew is a wrapper around gtk_source_gutter_renderer_text_new().
