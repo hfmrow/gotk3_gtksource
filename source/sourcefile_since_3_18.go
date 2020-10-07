@@ -9,7 +9,7 @@
 
 // Same copyright and license as the rest of the files in this project
 
-package gtk
+package source
 
 // #include <gtk/gtk.h>
 // #include <gtksourceview/gtksource.h>

@@ -13,7 +13,7 @@
 		or	libgtksourceview-3.0-dev with: // #cgo pkg-config: gtksourceview-3.0 for < gtk_3_20
 */
 
-package gtk
+package source
 
 // #cgo pkg-config: gdk-3.0 gio-2.0 glib-2.0 gobject-2.0 gtk+-3.0
 // #include <gtk/gtk.h>

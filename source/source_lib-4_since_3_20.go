@@ -21,7 +21,7 @@
 		Gtk	< gtk_3_20: libgtksourceview-3.0-dev -> #cgo pkg-config: gtksourceview-3.0
 */
 
-package gtk
+package source
 
 // #cgo pkg-config: gtksourceview-4
 import "C"

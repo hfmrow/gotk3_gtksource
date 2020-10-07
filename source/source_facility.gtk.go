@@ -1,4 +1,4 @@
-package gtk
+package source
 
 // #include <glib.h>
 // #include <glib-object.h>
