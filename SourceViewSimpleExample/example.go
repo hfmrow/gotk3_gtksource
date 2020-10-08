@@ -453,8 +453,8 @@ func FileChooser(filename string) (outFilename string, result bool, err error) {
 	fileChooser.SetSkipTaskbarHint(true)
 	fileChooser.SetKeepAbove(false)
 
-	switch int(fileChooser.Run()) {
-	case -3:
+	switch fileChooser.Run() {
+	case gtk.RESPONSE_ACCEPT:
 		result = true
 		outFilename = fileChooser.GetFilename()
 	}
