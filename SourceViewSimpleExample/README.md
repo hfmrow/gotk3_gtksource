@@ -1,6 +1,7 @@
 # gotk3 SourceView usage:
 
-- GtkSourceView basic demonstration.
+##### GtkSourceView basic demonstration.
 
+---
 
 ![im](screen.png)
