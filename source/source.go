@@ -60,7 +60,7 @@ func init() {
 		{glib.Type(C.gtk_source_view_gutter_position_get_type()), marshalSourceViewGutterPosition},
 		{glib.Type(C.gtk_source_completion_error_get_type()), marshalSourceCompletionError},
 		{glib.Type(C.gtk_source_completion_activation_get_type()), marshalSourceCompletionActivation},
-		{glib.Type(C.gtk_source_gutter_renderer_state_get_type()), marshalSourceGutterRendererState},
+		// {glib.Type(C.gtk_source_gutter_renderer_state_get_type()), marshalSourceGutterRendererState},
 		{glib.Type(C.gtk_source_gutter_renderer_alignment_mode_get_type()), marshalSourceGutterRendererAlignmentMode},
 		{glib.Type(C.gtk_source_bracket_match_type_get_type()), marshalSourceBracketMatchType},
 	}
@@ -154,10 +154,12 @@ const (
 	SOURCE_GUTTER_RENDERER_STATE_SELECTED SourceGutterRendererState = C.GTK_SOURCE_GUTTER_RENDERER_STATE_SELECTED
 )
 
-func marshalSourceGutterRendererState(p uintptr) (interface{}, error) {
-	c := C.g_value_get_enum((*C.GValue)(unsafe.Pointer(p)))
-	return SourceGutterRendererState(c), nil
-}
+// NOTE When declared to 'glib.TypeMarshaler', i have some GTK error when a signal try
+// To convert this value ...
+// func marshalSourceGutterRendererState(p uintptr) (interface{}, error) {
+// 	c := C.g_value_get_enum((*C.GValue)(unsafe.Pointer(p)))
+// 	return SourceGutterRendererState(c), nil
+// }
 
 // SourceGutterRendererAlignmentMode is a representation of GTK's GtkSourceGutterRendererAlignmentMode.
 type SourceGutterRendererAlignmentMode int
@@ -2112,6 +2114,8 @@ func wrapSourceGutterRendererPixbuf(obj *glib.Object) *SourceGutterRendererPixbu
 	return &SourceGutterRendererPixbuf{SourceGutterRenderer{glib.InitiallyUnowned{obj}}}
 }
 
+// Original function return a simple SourceGutterRenderer but in Go, its not really
+// intuitive to deal with that, so i decide to return a RenderPixbuf instead.
 // SourceGutterRendererPixbufNew is a wrapper around gtk_source_gutter_renderer_pixbuf_new().
 func SourceGutterRendererPixbufNew() (*SourceGutterRendererPixbuf, error) {
 	c := C.gtk_source_gutter_renderer_pixbuf_new()
@@ -2120,6 +2124,7 @@ func SourceGutterRendererPixbufNew() (*SourceGutterRendererPixbuf, error) {
 	}
 
 	return wrapSourceGutterRendererPixbuf(glib.Take(unsafe.Pointer(c))), nil
+	// return wrapSourceGutterRenderer(glib.Take(unsafe.Pointer(c))), nil
 }
 
 // SetPixbuf is a wrapper around gtk_source_gutter_renderer_pixbuf_set_pixbuf().
@@ -2187,6 +2192,8 @@ func wrapSourceGutterRendererText(obj *glib.Object) *SourceGutterRendererText {
 	return &SourceGutterRendererText{SourceGutterRenderer{glib.InitiallyUnowned{obj}}}
 }
 
+// Original function return a simple SourceGutterRenderer but in Go, its not really
+// intuitive to deal with that, so i decide to return a RenderText instead.
 // SourceGutterRendererTextNew is a wrapper around gtk_source_gutter_renderer_text_new().
 func SourceGutterRendererTextNew() (*SourceGutterRendererText, error) {
 	c := C.gtk_source_gutter_renderer_text_new()
