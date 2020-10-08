@@ -229,11 +229,13 @@ func wrapSourceBuffer(obj *glib.Object) *SourceBuffer {
 // ToTextBuffer returns a *TextBuffer
 // Some derived methods accept only a TextBuffer source as pointer
 func (v *SourceBuffer) ToTextBuffer() *gtk.TextBuffer {
+	if v == nil {
+		return nil
+	}
 	return &gtk.TextBuffer{v.Object}
 }
 
-// Serialize overriding gtk_text_buffer_serialize() to get a
-// GtkSourceBuffer from a GtkSourceView
+// Serialize overriding gtk_text_buffer_serialize() to use with GtkSourceBuffer
 func (v *SourceBuffer) Serialize(content *SourceBuffer, format gdk.Atom, start, end *gtk.TextIter) string {
 	var length = new(C.gsize)
 	ptr := C.gtk_text_buffer_serialize(
@@ -246,8 +248,7 @@ func (v *SourceBuffer) Serialize(content *SourceBuffer, format gdk.Atom, start, 
 	return C.GoStringN((*C.char)(unsafe.Pointer(ptr)), (C.int)(*length))
 }
 
-// Deserialize overriding gtk_text_buffer_deserialize() to get a
-// GtkSourceBuffer from a GtkSourceView
+// Deserialize overriding gtk_text_buffer_deserialize() to use with GtkSourceBuffer
 func (v *SourceBuffer) Deserialize(content *SourceBuffer, format gdk.Atom, iter *gtk.TextIter, data []byte) (ok bool, err error) {
 	var length = (C.gsize)(len(data))
 	var cerr *C.GError = nil
@@ -582,6 +583,9 @@ func wrapSourceView(obj *glib.Object) *SourceView {
 // ToTextView returns a *TextView
 // Some derived methods accept only a TextView source as pointer
 func (v *SourceView) ToTextView() *gtk.TextView {
+	if v == nil {
+		return nil
+	}
 	return &gtk.TextView{gtk.Container{gtk.Widget{glib.InitiallyUnowned{v.Object}}}}
 }
 
@@ -2114,17 +2118,14 @@ func wrapSourceGutterRendererPixbuf(obj *glib.Object) *SourceGutterRendererPixbu
 	return &SourceGutterRendererPixbuf{SourceGutterRenderer{glib.InitiallyUnowned{obj}}}
 }
 
-// Original function return a simple SourceGutterRenderer but in Go, its not really
-// intuitive to deal with that, so i decide to return a RenderPixbuf instead.
 // SourceGutterRendererPixbufNew is a wrapper around gtk_source_gutter_renderer_pixbuf_new().
-func SourceGutterRendererPixbufNew() (*SourceGutterRendererPixbuf, error) {
+func SourceGutterRendererPixbufNew() (*SourceGutterRenderer, error) {
 	c := C.gtk_source_gutter_renderer_pixbuf_new()
 	if c == nil {
 		return nil, nilPtrErr
 	}
-
-	return wrapSourceGutterRendererPixbuf(glib.Take(unsafe.Pointer(c))), nil
-	// return wrapSourceGutterRenderer(glib.Take(unsafe.Pointer(c))), nil
+	// return wrapSourceGutterRendererPixbuf(glib.Take(unsafe.Pointer(c))), nil
+	return wrapSourceGutterRenderer(glib.Take(unsafe.Pointer(c))), nil
 }
 
 // SetPixbuf is a wrapper around gtk_source_gutter_renderer_pixbuf_set_pixbuf().
@@ -2192,15 +2193,14 @@ func wrapSourceGutterRendererText(obj *glib.Object) *SourceGutterRendererText {
 	return &SourceGutterRendererText{SourceGutterRenderer{glib.InitiallyUnowned{obj}}}
 }
 
-// Original function return a simple SourceGutterRenderer but in Go, its not really
-// intuitive to deal with that, so i decide to return a RenderText instead.
 // SourceGutterRendererTextNew is a wrapper around gtk_source_gutter_renderer_text_new().
-func SourceGutterRendererTextNew() (*SourceGutterRendererText, error) {
+func SourceGutterRendererTextNew() (*SourceGutterRenderer, error) {
 	c := C.gtk_source_gutter_renderer_text_new()
 	if c == nil {
 		return nil, nilPtrErr
 	}
-	return wrapSourceGutterRendererText(glib.Take(unsafe.Pointer(c))), nil
+	// return wrapSourceGutterRendererText(glib.Take(unsafe.Pointer(c))), nil
+	return wrapSourceGutterRenderer(glib.Take(unsafe.Pointer(c))), nil
 }
 
 // SetMarkup is a wrapper around gtk_source_gutter_renderer_text_set_markup().
