@@ -24,9 +24,9 @@ import (
 )
 
 var (
-	sv     *source.SourceView // Just to see you, kind of naming authorized (check above, import rules)
+	sv     *source.SourceView
 	buff   *source.SourceBuffer
-	slm    *source.SourceLanguageManager // second way to map library name (check above, import rules)
+	slm    *source.SourceLanguageManager
 	lng    *source.SourceLanguage
 	sssm   *source.SourceStyleSchemeManager
 	scheme *source.SourceStyleScheme
