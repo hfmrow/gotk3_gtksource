@@ -1484,7 +1484,7 @@ func (v *SourceCompletion) UnblockInteractive() {
 
 // SourceCompletionContext is a representation of GTK's GtkSourceCompletionContext.
 type SourceCompletionContext struct {
-	*glib.Object
+	glib.InitiallyUnowned
 }
 
 // native returns a pointer to the underlying GtkSourceCompletion.
@@ -1503,7 +1503,7 @@ func marshalSourceCompletionContext(p uintptr) (interface{}, error) {
 }
 
 func wrapSourceCompletionContext(obj *glib.Object) *SourceCompletionContext {
-	return &SourceCompletionContext{obj}
+	return &SourceCompletionContext{glib.InitiallyUnowned{obj}}
 }
 
 // AddProposals is a wrapper around gtk_source_completion_context_add_proposals().
@@ -1649,6 +1649,51 @@ func (v *SourceCompletionProvider) GetPriority(context *SourceCompletionContext)
 }
 
 /*
+ * GtkSourceCompletionInfo (full)
+ */
+
+// SourceCompletionInfo is a representation of GTK's GtkSourceCompletionInfo.
+type SourceCompletionInfo struct {
+	gtk.Window
+}
+
+// native returns a pointer to the underlying GtkSourceCompletionInfo.
+func (v *SourceCompletionInfo) native() *C.GtkSourceCompletionInfo {
+	if v == nil || v.GObject == nil {
+		return nil
+	}
+	p := unsafe.Pointer(v.GObject)
+	return C.toGtkSourceCompletionInfo(p)
+}
+
+func marshalSourceCompletionInfo(p uintptr) (interface{}, error) {
+	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
+	obj := glib.Take(unsafe.Pointer(c))
+	return wrapSourceCompletionInfo(obj), nil
+}
+
+func wrapSourceCompletionInfo(obj *glib.Object) *SourceCompletionInfo {
+
+	return &SourceCompletionInfo{gtk.Window{gtk.Bin{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}}}
+}
+
+// SourceCompletionInfoNew is a wrapper around gtk_source_completion_info_new().
+func SourceCompletionInfoNew() (*SourceCompletionInfo, error) {
+	c := C.gtk_source_completion_info_new()
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	return wrapSourceCompletionInfo(glib.Take(unsafe.Pointer(c))), nil
+}
+
+// MoveToIter is a wrapper around gtk_source_completion_info_move_to_iter().
+func (v *SourceCompletionInfo) MoveToIter(view *gtk.TextView, iter *gtk.TextIter) {
+	C.gtk_source_completion_info_move_to_iter(v.native(),
+		C.toGtkTextView(unsafe.Pointer(view.Native())),
+		nativeTextIter(iter))
+}
+
+/*
  * GtkSourceCompletionProposal (full)
  */
 
@@ -1712,56 +1757,14 @@ func (v *SourceCompletionProposal) Equal(other *SourceCompletionProposal) bool {
 }
 
 /*
- * GtkSourceCompletionInfo (full)
- */
-
-// SourceCompletionInfo is a representation of GTK's GtkSourceCompletionInfo.
-type SourceCompletionInfo struct {
-	*glib.Object
-}
-
-// native returns a pointer to the underlying GtkSourceCompletionInfo.
-func (v *SourceCompletionInfo) native() *C.GtkSourceCompletionInfo {
-	if v == nil || v.GObject == nil {
-		return nil
-	}
-	p := unsafe.Pointer(v.GObject)
-	return C.toGtkSourceCompletionInfo(p)
-}
-
-func marshalSourceCompletionInfo(p uintptr) (interface{}, error) {
-	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
-	obj := glib.Take(unsafe.Pointer(c))
-	return wrapSourceCompletionInfo(obj), nil
-}
-
-func wrapSourceCompletionInfo(obj *glib.Object) *SourceCompletionInfo {
-	return &SourceCompletionInfo{obj}
-}
-
-// SourceCompletionInfoNew is a wrapper around gtk_source_completion_info_new().
-func SourceCompletionInfoNew() (*SourceCompletionInfo, error) {
-	c := C.gtk_source_completion_info_new()
-	if c == nil {
-		return nil, nilPtrErr
-	}
-	return wrapSourceCompletionInfo(glib.Take(unsafe.Pointer(c))), nil
-}
-
-// MoveToIter is a wrapper around gtk_source_completion_info_move_to_iter().
-func (v *SourceCompletionInfo) MoveToIter(view *gtk.TextView, iter *gtk.TextIter) {
-	C.gtk_source_completion_info_move_to_iter(v.native(),
-		C.toGtkTextView(unsafe.Pointer(view.Native())),
-		nativeTextIter(iter))
-}
-
-/*
  * GtkSourceCompletionItem
  */
 
 // SourceCompletionItem is a representation of GTK's GtkSourceCompletionItem.
 type SourceCompletionItem struct {
 	*glib.Object
+
+	SourceCompletionProposal
 }
 
 // native returns a pointer to the underlying GtkSourceCompletionItem.
@@ -1780,7 +1783,9 @@ func marshalSourceCompletionItem(p uintptr) (interface{}, error) {
 }
 
 func wrapSourceCompletionItem(obj *glib.Object) *SourceCompletionItem {
-	return &SourceCompletionItem{obj}
+	cp := wrapSourceCompletionProposal(obj)
+
+	return &SourceCompletionItem{obj, *cp}
 }
 
 /*
@@ -1790,6 +1795,8 @@ func wrapSourceCompletionItem(obj *glib.Object) *SourceCompletionItem {
 // SourceCompletionWords is a representation of GTK's GtkSourceCompletionWords.
 type SourceCompletionWords struct {
 	*glib.Object
+
+	SourceCompletionProvider
 }
 
 // native returns a pointer to the underlying GtkSourceCompletionWords.
@@ -1808,7 +1815,9 @@ func marshalSourceCompletionWords(p uintptr) (interface{}, error) {
 }
 
 func wrapSourceCompletionWords(obj *glib.Object) *SourceCompletionWords {
-	return &SourceCompletionWords{obj}
+	cp := wrapSourceCompletionProvider(obj)
+
+	return &SourceCompletionWords{obj, *cp}
 }
 
 // SourceCompletionWordsNew is a wrapper around gtk_source_completion_words_new().

@@ -19,7 +19,6 @@ import (
 	"unsafe"
 
 	"github.com/gotk3/gotk3/glib"
-	"github.com/gotk3/gotk3/gtk"
 )
 
 func init() {
@@ -30,7 +29,7 @@ func init() {
 
 	glib.RegisterGValueMarshalers(tm)
 
-	gtk.WrapMap["GtkSourceEncoding"] = wrapSourceEncoding
+	// gtk.WrapMap["GtkSourceEncoding"] = wrapSourceEncoding
 }
 
 /*
@@ -39,27 +38,34 @@ func init() {
 
 // SourceEncoding is a representation of GTK's GtkSourceEncoding.
 // Character encoding
-type SourceEncoding struct {
-	*glib.Object
-}
+
+// type SourceEncoding struct {
+// 	*glib.Object
+// }
+
+// func marshalSourceEncoding(p uintptr) (interface{}, error) {
+// 	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
+// 	return wrapSourceEncoding(obj), nil
+// }
+
+// func wrapSourceEncoding(obj *glib.Object) *SourceEncoding {
+// 	return &SourceEncoding{obj}
+// }
+
+type SourceEncoding C.GtkSourceEncoding
 
 // native returns a pointer to the underlying GtkSourceEncoding.
 func (v *SourceEncoding) native() *C.GtkSourceEncoding {
-	if v == nil || v.GObject == nil {
+	if v == nil {
 		return nil
 	}
-	p := unsafe.Pointer(v.GObject)
+	p := unsafe.Pointer(v)
 	return C.toGtkSourceEncoding(p)
 }
 
 func marshalSourceEncoding(p uintptr) (interface{}, error) {
-	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
-	obj := glib.Take(unsafe.Pointer(c))
-	return wrapSourceEncoding(obj), nil
-}
-
-func wrapSourceEncoding(obj *glib.Object) *SourceEncoding {
-	return &SourceEncoding{obj}
+	c := C.g_value_get_boxed((*C.GValue)(unsafe.Pointer(p)))
+	return (*SourceEncoding)(unsafe.Pointer(c)), nil
 }
 
 // SourceEncodingGetUtf8 is a wrapper around gtk_source_encoding_get_utf8().
@@ -69,7 +75,7 @@ func SourceEncodingGetUtf8() (*SourceEncoding, error) {
 		return nil, nilPtrErr
 	}
 
-	e := wrapSourceEncoding(glib.Take(unsafe.Pointer(c)))
+	e := (*SourceEncoding)(unsafe.Pointer(c))
 	return e, nil
 }
 
@@ -80,7 +86,7 @@ func SourceEncodingGetCurrent() (*SourceEncoding, error) {
 		return nil, nilPtrErr
 	}
 
-	e := wrapSourceEncoding(glib.Take(unsafe.Pointer(c)))
+	e := (*SourceEncoding)(unsafe.Pointer(c))
 	return e, nil
 }
 
@@ -94,7 +100,7 @@ func SourceEncodingGetFromCharset(charset string) (*SourceEncoding, error) {
 		return nil, nilPtrErr
 	}
 
-	e := wrapSourceEncoding(glib.Take(unsafe.Pointer(c)))
+	e := (*SourceEncoding)(unsafe.Pointer(c))
 	return e, nil
 }
 
@@ -137,6 +143,6 @@ func (v *SourceEncoding) Copy() (*SourceEncoding, error) {
 		return nil, nilPtrErr
 	}
 
-	e := wrapSourceEncoding(glib.Take(unsafe.Pointer(c)))
+	e := (*SourceEncoding)(unsafe.Pointer(c))
 	return e, nil
 }

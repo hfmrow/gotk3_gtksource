@@ -188,7 +188,7 @@ func (v *SourceFile) GetEncoding() (*SourceEncoding, error) {
 		return nil, nilPtrErr
 	}
 
-	e := wrapSourceEncoding(glib.Take(unsafe.Pointer(c)))
+	e := (*SourceEncoding)(unsafe.Pointer(c))
 	return e, nil
 }
 
@@ -347,7 +347,7 @@ func (v *SourceFileLoader) GetEncoding() (*SourceEncoding, error) {
 		return nil, nilPtrErr
 	}
 
-	e := wrapSourceEncoding(glib.Take(unsafe.Pointer(c)))
+	e := (*SourceEncoding)(unsafe.Pointer(c))
 	return e, nil
 }
 
@@ -464,7 +464,7 @@ func (v *SourceFileSaver) GetEncoding() (*SourceEncoding, error) {
 		return nil, nilPtrErr
 	}
 
-	e := wrapSourceEncoding(glib.Take(unsafe.Pointer(c)))
+	e := (*SourceEncoding)(unsafe.Pointer(c))
 	return e, nil
 }
 

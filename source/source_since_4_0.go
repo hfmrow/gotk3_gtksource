@@ -60,10 +60,10 @@ func (v *SourceCompletion) Start(providers *glib.List, context *SourceCompletion
 // SourceCompletionItemNew is a wrapper around gtk_source_completion_item_new().
 func SourceCompletionItemNew() (*SourceCompletionItem, error) {
 	c := C.gtk_source_completion_item_new()
-
 	if c == nil {
 		return nil, nilPtrErr
 	}
+
 	return wrapSourceCompletionItem(glib.Take(unsafe.Pointer(c))), nil
 }
 

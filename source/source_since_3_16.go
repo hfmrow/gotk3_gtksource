@@ -87,6 +87,7 @@ func (v *SourceStyleSchemeChooser) SetStyleScheme(scheme *SourceStyleScheme) {
 // SourceStyleSchemeChooserWidget is a representation of GTK's GtkSourceStyleSchemeChooserWidget.
 type SourceStyleSchemeChooserWidget struct {
 	gtk.Bin
+
 	SourceStyleSchemeChooser
 }
 
@@ -107,6 +108,7 @@ func marshalSourceStyleSchemeChooserWidget(p uintptr) (interface{}, error) {
 
 func wrapSourceStyleSchemeChooserWidget(obj *glib.Object) *SourceStyleSchemeChooserWidget {
 	c := wrapSourceStyleSchemeChooser(obj)
+
 	return &SourceStyleSchemeChooserWidget{gtk.Bin{gtk.Container{gtk.Widget{glib.InitiallyUnowned{obj}}}}, *c}
 }
 
