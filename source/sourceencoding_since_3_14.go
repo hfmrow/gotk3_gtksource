@@ -36,22 +36,6 @@ func init() {
  * GtkSourceEncoding
  */
 
-// SourceEncoding is a representation of GTK's GtkSourceEncoding.
-// Character encoding
-
-// type SourceEncoding struct {
-// 	*glib.Object
-// }
-
-// func marshalSourceEncoding(p uintptr) (interface{}, error) {
-// 	c := C.g_value_get_object((*C.GValue)(unsafe.Pointer(p)))
-// 	return wrapSourceEncoding(obj), nil
-// }
-
-// func wrapSourceEncoding(obj *glib.Object) *SourceEncoding {
-// 	return &SourceEncoding{obj}
-// }
-
 type SourceEncoding C.GtkSourceEncoding
 
 // native returns a pointer to the underlying GtkSourceEncoding.
