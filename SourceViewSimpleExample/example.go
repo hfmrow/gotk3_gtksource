@@ -147,7 +147,7 @@ func setupWindow(title string) *gtk.Window {
 
 	// GtkSourceView implementation
 	if sv, err = source.SourceViewNew(); err == nil {
-		ma, mi, mc, _ := sv.GetVersion()
+		ma, mi, mc, _ := source.SourceGetVersion()
 
 		// Display GtkSourceView version informations
 		lblVersion.SetLabel(fmt.Sprintf("%v: v%v.%v.%v", lblVersion.GetLabel(), ma, mi, mc))
