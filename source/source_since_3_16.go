@@ -183,7 +183,7 @@ func marshalSourceBackgroundPatternType(p uintptr) (interface{}, error) {
 
 // GetVersion same as GTK_SOURCE_CHECK_VERSION() macro. It is a personal
 // implementation to check which version will be deployed in prod.
-func (v *SourceView) GetVersion() (int, int, int, bool) {
+func SourceGetVersion() (int, int, int, bool) {
 	major := C.gtk_source_get_major_version()
 	minor := C.gtk_source_get_minor_version()
 	micro := C.gtk_source_get_micro_version()
