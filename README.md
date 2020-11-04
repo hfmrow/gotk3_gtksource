@@ -7,14 +7,14 @@ This repository must be used with [gotk3: Go bindings for GTK3](https://github.c
 ---
 
 - Example of GtkSourceView usage in Go: [SourceViewSimpleExample](https://github.com/hfmrow/gotk3_gtksource/tree/main/SourceViewSimpleExample)
-- Another more complex example will come soon
+- More complex example in Go: [SourceViewExample](https://github.com/hfmrow/gotk3_gtksource/tree/main/SourceViewExample)
 
 ---
 
 ##### installation:
 
 - Ubuntu linux only **\*\*** see at bottom why.
-- Designed to be used with gtk3 >= 3.16 and gtksourceview >=3.18
+- Designed to be used with gtk3 >= 3.16 and gtksourceview >=3.18-4
 - Be sure you have latest [gotk3](https://github.com/gotk3/gotk3/wiki#installation) installed correctly and working right.
 - Use classic command: `go get github.com/hfmrow/gotk3_gtksource/source` for current Gtk3 v3.24, (Ubuntu focal). See below for specific versions.
 - Golang GtkSourceView follows the same rules as gotk3 for compiling different versions of gtksourceview.
@@ -62,60 +62,56 @@ This repository must be used with [gotk3: Go bindings for GTK3](https://github.c
 ---
 
 - [x] [GtkSourceBuffer](https://developer.gnome.org/gtksourceview/stable/GtkSourceBuffer.html) — Subclass of GtkTextBuffer
-  
+
 - [x] [GtkSourceView](https://developer.gnome.org/gtksourceview/stable/GtkSourceView.html) — Subclass of GtkTextView
-  
+
 - [x] [GtkSourceLanguage](https://developer.gnome.org/gtksourceview/stable/GtkSourceLanguage.html) — Represents a syntax highlighted language
-  
+
 - [x] [GtkSourceLanguageManager](https://developer.gnome.org/gtksourceview/stable/GtkSourceLanguageManager.html) — Provides access to GtkSourceLanguages
-  
 
 ---
 
 - [x] [GtkSourceStyle](https://developer.gnome.org/gtksourceview/stable/GtkSourceStyle.html) — Represents a style
-  
+
 - [x] [GtkSourceStyleScheme](https://developer.gnome.org/gtksourceview/stable/GtkSourceStyleScheme.html) — Controls the appearance of GtkSourceView
-  
+
 - [x] [GtkSourceStyleSchemeManager](https://developer.gnome.org/gtksourceview/stable/GtkSourceStyleSchemeManager.html) — Provides access to GtkSourceStyleSchemes
-  
+
 - [x] [GtkSourceStyleSchemeChooser](https://developer.gnome.org/gtksourceview/stable/GtkSourceStyleSchemeChooser.html) — Interface implemented by widgets for choosing style schemes
-  
+
 - [x] [GtkSourceStyleSchemeChooserButton](https://developer.gnome.org/gtksourceview/stable/GtkSourceStyleSchemeChooserButton.html) — A button to launch a style scheme selection dialog
-  
+
 - [x] [GtkSourceStyleSchemeChooserWidget](https://developer.gnome.org/gtksourceview/stable/GtkSourceStyleSchemeChooserWidget.html) — A widget for choosing style schemes
-  
 
 ---
 
 - [x] [GtkSourceCompletion](https://developer.gnome.org/gtksourceview/stable/GtkSourceCompletion.html) — Main Completion Object
-  
+
 - [x] [GtkSourceCompletionContext](https://developer.gnome.org/gtksourceview/stable/GtkSourceCompletionContext.html) — The context of a completion
-  
+
 - [x] [GtkSourceCompletionInfo](https://developer.gnome.org/gtksourceview/stable/GtkSourceCompletionInfo.html) — Calltips object
-  
+
 - [x] [GtkSourceCompletionItem](https://developer.gnome.org/gtksourceview/stable/GtkSourceCompletionItem.html) — Simple implementation of GtkSourceCompletionProposal
-  
+
 - [x] [GtkSourceCompletionProposal](https://developer.gnome.org/gtksourceview/stable/GtkSourceCompletionProposal.html) — Completion proposal interface
-  
+
 - [x] [GtkSourceCompletionProvider](https://developer.gnome.org/gtksourceview/stable/GtkSourceCompletionProvider.html) — Completion provider interface
-  
+
 - [x] [GtkSourceCompletionWords](https://developer.gnome.org/gtksourceview/stable/GtkSourceCompletionWords.html) — A GtkSourceCompletionProvider for the completion of words
-  
 
 ---
 
 - [x] [GtkSourceGutter](https://developer.gnome.org/gtksourceview/stable/GtkSourceGutter.html) — Gutter object for GtkSourceView
-  
+
 - [x] [GtkSourceGutterRenderer](https://developer.gnome.org/gtksourceview/stable/GtkSourceGutterRenderer.html) — Gutter cell renderer
-  
+
 - [x] [GtkSourceGutterRendererPixbuf](https://developer.gnome.org/gtksourceview/stable/GtkSourceGutterRendererPixbuf.html) — Renders a pixbuf in the gutter
-  
+
 - [x] [GtkSourceGutterRendererText](https://developer.gnome.org/gtksourceview/stable/GtkSourceGutterRendererText.html) — Renders text in the gutter
-  
+
 - [x] [GtkSourceMark](https://developer.gnome.org/gtksourceview/stable/GtkSourceMark.html) — Mark object for GtkSourceBuffer
-  
+
 - [x] [GtkSourceMarkAttributes](https://developer.gnome.org/gtksourceview/stable/GtkSourceMarkAttributes.html) — The source mark attributes object
-  
 
 ---
 
@@ -124,9 +120,8 @@ This repository must be used with [gotk3: Go bindings for GTK3](https://github.c
 ---
 
 - [x] [GtkSourceSearchContext](https://developer.gnome.org/gtksourceview/stable/GtkSourceSearchContext.html) — Search context
-  
+
 - [x] [GtkSourceSearchSettings](https://developer.gnome.org/gtksourceview/stable/GtkSourceSearchSettings.html) — Search settings
-  
 
 ---
 
@@ -135,19 +130,18 @@ This repository must be used with [gotk3: Go bindings for GTK3](https://github.c
 ---
 
 - [x] [GtkSourceMap](https://developer.gnome.org/gtksourceview/stable/GtkSourceMap.html) — Widget that displays a map for a specific GtkSourceView
-  
+
 - [ ] [GtkSourceRegion](https://developer.gnome.org/gtksourceview/stable/GtkSourceRegion.html) — Region utility
-  
+
 - [x] [GtkSourceSpaceDrawer](https://developer.gnome.org/gtksourceview/stable/GtkSourceSpaceDrawer.html) — Represent white space characters with symbols
-  
+
 - [x] [GtkSourceTag](https://developer.gnome.org/gtksourceview/stable/GtkSourceTag.html) — A tag that can be applied to text in a GtkSourceBuffer
-  
+
 - [x] [GtkSourceUndoManager](https://developer.gnome.org/gtksourceview/stable/GtkSourceUndoManager.html) — Undo manager interface for GtkSourceView
-  
+
 - [x] [GtkSourceUtils](https://developer.gnome.org/gtksourceview/stable/gtksourceview-4.0-GtkSourceUtils.html) — Utility functions
-  
+
 - [x] [Version Information](https://developer.gnome.org/gtksourceview/stable/gtksourceview-4.0-Version-Information.html) — Macros and functions to check the GtkSourceView version
-  
 
 ---
 
