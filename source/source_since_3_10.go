@@ -132,7 +132,8 @@ func (v *SourceSearchContext) GetHighLight() bool {
 
 // SetHighLight is a wrapper around gtk_source_search_context_set_highlight().
 func (v *SourceSearchContext) SetHighLight(highlight bool) {
-	C.gtk_source_search_context_set_highlight(v.native(),
+	C.gtk_source_search_context_set_highlight(
+		v.native(),
 		gbool(highlight))
 }
 
@@ -144,8 +145,12 @@ func (v *SourceSearchContext) GetOccurencesCount() int {
 
 // GetOccurencePosition is a wrapper around gtk_source_search_context_get_occurrence_position().
 func (v *SourceSearchContext) GetOccurencePosition(start, end *gtk.TextIter) int {
+
 	c := C.gtk_source_search_context_get_occurrence_position(
-		v.native(), nativeTextIter(start), nativeTextIter(end))
+		v.native(),
+		nativeTextIter(start),
+		nativeTextIter(end))
+
 	return int(c)
 }
 
@@ -168,7 +173,11 @@ func (v *SourceSearchContext) ForwardAsync(
 
 	id := registerAsyncReadyCallback(callback, userDataPtr)
 
-	C._gtk_source_search_context_forward_async(v.native(), nativeTextIter(iter), c, C.gpointer(uintptr(id)))
+	C._gtk_source_search_context_forward_async(
+		v.native(),
+		nativeTextIter(iter),
+		c,
+		C.gpointer(uintptr(id)))
 }
 
 // BackwardAsync is a wrapper around gtk_source_search_context_backward_async().
@@ -190,7 +199,11 @@ func (v *SourceSearchContext) BackwardAsync(
 
 	id := registerAsyncReadyCallback(callback, userDataPtr)
 
-	C._gtk_source_search_context_backward_async(v.native(), nativeTextIter(iter), c, C.gpointer(uintptr(id)))
+	C._gtk_source_search_context_backward_async(
+		v.native(),
+		nativeTextIter(iter),
+		c,
+		C.gpointer(uintptr(id)))
 }
 
 // ReplaceAll is a wrapper around gtk_source_search_context_replace_all().

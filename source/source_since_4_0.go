@@ -73,64 +73,88 @@ func SourceCompletionItemNew() (*SourceCompletionItem, error) {
 
 // Forward is a wrapper around gtk_source_search_context_forward().
 func (v *SourceSearchContext) Forward(iter *gtk.TextIter) (*gtk.TextIter, *gtk.TextIter, bool, bool) {
+
 	start, end := new(gtk.TextIter), new(gtk.TextIter)
-	hasWrappedAround := new(C.gint)
+	var hasWrappedAround C.gboolean
 
 	c := C.gtk_source_search_context_forward(
 		v.native(),
 		nativeTextIter(iter),
 		nativeTextIter(start),
 		nativeTextIter(end),
-		hasWrappedAround)
+		&hasWrappedAround)
 
-	return start, end, gobool(*hasWrappedAround), gobool(c)
+	return start, end, gobool(hasWrappedAround), gobool(c)
 }
 
 // ForwardFinish is a wrapper around gtk_source_search_context_forward_finish().
 func (v *SourceSearchContext) ForwardFinish(result *glib.AsyncResult) (*gtk.TextIter, *gtk.TextIter, bool, bool, error) {
-	start, end := new(gtk.TextIter), new(gtk.TextIter)
-	hasWrappedAround := new(C.gint)
-	var cerr *C.GError = nil
-	var err error
 
-	c := C.gtk_source_search_context_forward_finish(v.native(),
+	var (
+		start            = new(gtk.TextIter)
+		end              = new(gtk.TextIter)
+		hasWrappedAround C.gboolean
+		cerr             *C.GError = nil
+		err              error
+	)
+
+	c := C.gtk_source_search_context_forward_finish(
+		v.native(),
 		(*C.GAsyncResult)(unsafe.Pointer(result.Native())),
-		nativeTextIter(start), nativeTextIter(end), hasWrappedAround, &cerr)
+		nativeTextIter(start),
+		nativeTextIter(end),
+		&hasWrappedAround,
+		&cerr)
 
 	if cerr != nil {
 		defer C.g_error_free(cerr)
 		err = errors.New(goString(cerr.message))
 	}
-	return start, end, gobool(*hasWrappedAround), gobool(c), err
+
+	return start, end, gobool(hasWrappedAround), gobool(c), err
 }
 
 // Backward is a wrapper around gtk_source_search_context_backward().
 func (v *SourceSearchContext) Backward(iter *gtk.TextIter) (*gtk.TextIter, *gtk.TextIter, bool, bool) {
+
 	start, end := new(gtk.TextIter), new(gtk.TextIter)
-	hasWrappedAround := new(C.gint)
+	var hasWrappedAround C.gboolean
 
 	c := C.gtk_source_search_context_backward(
-		v.native(), nativeTextIter(iter), nativeTextIter(start), nativeTextIter(end), hasWrappedAround)
+		v.native(),
+		nativeTextIter(iter),
+		nativeTextIter(start),
+		nativeTextIter(end),
+		&hasWrappedAround)
 
-	return start, end, gobool(*hasWrappedAround), gobool(c)
+	return start, end, gobool(hasWrappedAround), gobool(c)
 }
 
 // BackwardFinish is a wrapper around gtk_source_search_context_backward_finish().
 func (v *SourceSearchContext) BackwardFinish(result *glib.AsyncResult) (*gtk.TextIter, *gtk.TextIter, bool, bool, error) {
-	start, end := new(gtk.TextIter), new(gtk.TextIter)
-	hasWrappedAround := new(C.gint)
-	var cerr *C.GError = nil
-	var err error
 
-	c := C.gtk_source_search_context_backward_finish(v.native(),
+	var (
+		start            = new(gtk.TextIter)
+		end              = new(gtk.TextIter)
+		hasWrappedAround C.gboolean
+		cerr             *C.GError = nil
+		err              error
+	)
+
+	c := C.gtk_source_search_context_backward_finish(
+		v.native(),
 		(*C.GAsyncResult)(unsafe.Pointer(result.Native())),
-		nativeTextIter(start), nativeTextIter(end), hasWrappedAround, &cerr)
+		nativeTextIter(start),
+		nativeTextIter(end),
+		&hasWrappedAround,
+		&cerr)
 
 	if cerr != nil {
 		defer C.g_error_free(cerr)
 		err = errors.New(goString(cerr.message))
 	}
-	return start, end, gobool(*hasWrappedAround), gobool(c), err
+
+	return start, end, gobool(hasWrappedAround), gobool(c), err
 }
 
 // Replace is a wrapper around gtk_source_search_context_replace().
