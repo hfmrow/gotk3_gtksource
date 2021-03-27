@@ -1,5 +1,5 @@
 // +build linux
-// +build !gtk_3_6,!gtk_3_8,!gtk_3_10,!gtk_3_12,!gtk_3_14
+// +build !gtk_3_6,!gtk_3_8,!gtk_3_10,!gtk_3_12,!gtk_3_14,!gtk_3_16,!gtk_3_18,!gtk_3_20
 // +build !gtksourceview_3_18,!gtksourceview_3_20,!gtksourceview_3_22,!gtksourceview_3_24
 
 // Filename version number based on gtk_sourceview

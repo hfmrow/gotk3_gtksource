@@ -38,7 +38,7 @@ import (
 )
 
 type SourceViewStruct struct {
-	window    gtk.IWindow
+	Window    gtk.IWindow
 	View      *source.SourceView
 	Buffer    *source.SourceBuffer
 	Map       *source.SourceMap
@@ -101,9 +101,14 @@ type SourceViewStruct struct {
 	dialog                   *gtk.Dialog
 }
 
-func SourceViewStructNew(window gtk.IWindow, sourceView *source.SourceView, sourceMap *source.SourceMap) (svs *SourceViewStruct, err error) {
+// SourceViewStructNew:
+func SourceViewStructNew(sourceView *source.SourceView, sourceMap *source.SourceMap, parentWindow ...gtk.IWindow) (svs *SourceViewStruct, err error) {
 
 	svs = new(SourceViewStruct)
+
+	if len(parentWindow) > 0 {
+		svs.Window = parentWindow[0]
+	}
 
 	svs.View = sourceView
 	svs.Map = sourceMap
@@ -134,8 +139,51 @@ func SourceViewStructNew(window gtk.IWindow, sourceView *source.SourceView, sour
 		svs.DefaultStyleShemeId = "classic"
 		svs.DefaultLanguageId = "go"
 
+		// Make a tag to indicate found element (when HighlightFound not checked)
+		// tag := make(map[string]interface{})
+		// tag["background"] = "#ABF6FF"
+		// markFound = svs.Buffer.CreateTag("markFound", tag)
+
 	}
 	return
+}
+
+// ComboboxHandling: 'defaultValues' if present must be: Language followed by Style
+// they're the main options (stored values) that will be updated each time one of them are changed.
+func (svs *SourceViewStruct) ComboboxHandling(cbxtStyle, cbxtLang *gtk.ComboBoxText, defaultLang, defaultStyle *string) {
+
+	// Setting Language and style scheme
+	if currentLanguage := svs.SetLanguage(svs.DefaultLanguageId); currentLanguage != nil {
+		if currentStyleScheme := svs.SetStyleScheme(svs.DefaultStyleShemeId); currentStyleScheme != nil {
+
+			// Fill comboboxes with languages and styles
+			for _, id := range svs.LanguageIds {
+				cbxtLang.AppendText(id)
+			}
+			for _, id := range svs.StyleShemeIds {
+				cbxtStyle.AppendText(id)
+			}
+
+			// Just indicate id must be set as first model column.
+			cbxtLang.SetIDColumn(0)
+			cbxtStyle.SetIDColumn(0)
+
+			// Set ComboBox current values display.
+			cbxtLang.SetActiveID(svs.DefaultLanguageId)
+			cbxtStyle.SetActiveID(svs.DefaultStyleShemeId)
+
+			// Signals changed
+			cbxtLang.Connect("changed", func(cbxt *gtk.ComboBoxText) {
+				*defaultLang = cbxt.GetActiveID()
+				svs.SetLanguage(*defaultLang)
+			})
+			cbxtStyle.Connect("changed", func(cbxt *gtk.ComboBoxText) {
+				*defaultStyle = cbxt.GetActiveID()
+				svs.SetStyleScheme(*defaultStyle)
+			})
+
+		}
+	}
 }
 
 // SetLanguage:
@@ -146,7 +194,7 @@ func (svs *SourceViewStruct) SetLanguage(id string) *source.SourceLanguage {
 	if err = svs.initLanguageAndStyleScheme(); err == nil {
 
 		// Set Language scheme to sourceBuffer
-		if !IsExistSlice(svs.LanguageIds, id) {
+		if !isExistSlice(svs.LanguageIds, id) {
 			id = svs.DefaultLanguageId
 		}
 
@@ -171,7 +219,7 @@ func (svs *SourceViewStruct) SetStyleScheme(id string) *source.SourceStyleScheme
 	if err = svs.initLanguageAndStyleScheme(); err == nil {
 
 		// Set style scheme to sourceBuffer
-		if !IsExistSlice(svs.StyleShemeIds, id) {
+		if !isExistSlice(svs.StyleShemeIds, id) {
 			id = svs.DefaultStyleShemeId
 		}
 
@@ -246,7 +294,7 @@ func (svs *SourceViewStruct) StyleChooserDialog() string {
 
 			// Create Dialog.
 			if svs.dialog, err = gtk.DialogNewWithButtons("Choose scheme style",
-				svs.window, gtk.DIALOG_DESTROY_WITH_PARENT,
+				svs.Window, gtk.DIALOG_DESTROY_WITH_PARENT,
 				[]interface{}{"Cancel", gtk.RESPONSE_CANCEL},
 				[]interface{}{"Accept", gtk.RESPONSE_ACCEPT}); err == nil {
 
@@ -339,7 +387,7 @@ func (svs *SourceViewStruct) SearchAsync(callback func(), iter *gtk.TextIter, ba
 
 			// Do a ForwardAsync search
 			svs.SearchCtx.ForwardAsync(iter, nil,
-				func(object *glib.Object, res *glib.AsyncResult, data uintptr) {
+				func(object *glib.Object, res *glib.AsyncResult) {
 
 					if svs.IterStart,
 						svs.IterEnd,
@@ -367,7 +415,7 @@ func (svs *SourceViewStruct) SearchAsync(callback func(), iter *gtk.TextIter, ba
 
 			// Do a BackwardAsync search
 			svs.SearchCtx.BackwardAsync(iter, nil,
-				func(object *glib.Object, res *glib.AsyncResult, data uintptr) {
+				func(object *glib.Object, res *glib.AsyncResult) {
 
 					if svs.IterStart,
 						svs.IterEnd,
@@ -445,7 +493,6 @@ func (svs *SourceViewStruct) ScrollToLine(line int) (iter *gtk.TextIter) {
 		iter = svs.Buffer.GetIterAtLine(line)
 
 		svs.View.ScrollToIter(iter, 0.0, true, 0.5, 0.5)
-
 	}
 
 	return
@@ -466,6 +513,7 @@ func (svs *SourceViewStruct) ScrollToIter(iter *gtk.TextIter) int {
 
 // GetLineNumber: Get current line number at the cursor position
 func (svs *SourceViewStruct) GetCurrentLineNb() int {
+
 	iter := svs.Buffer.GetIterAtMark(svs.Buffer.GetInsert())
 
 	if iter != svs.Buffer.GetEndIter() {
@@ -476,6 +524,7 @@ func (svs *SourceViewStruct) GetCurrentLineNb() int {
 
 // SetCursorAtLine: Set current line number & place cursor on it.
 func (svs *SourceViewStruct) SetCursorAtLine(line int) (iter *gtk.TextIter) {
+
 	iter = svs.Buffer.GetIterAtLine(line)
 	svs.Buffer.PlaceCursor(iter)
 	svs.View.GrabFocus()
@@ -508,6 +557,7 @@ func (svs *SourceViewStruct) ColorBgRange(startLine, endLine int) {
 
 // GetText: retrieve text from buffer.
 func (svs *SourceViewStruct) GetText() (text string) {
+
 	var err error
 
 	if text, err = svs.Buffer.GetText(svs.Buffer.GetStartIter(), svs.Buffer.GetEndIter(), true); err != nil {
@@ -518,12 +568,63 @@ func (svs *SourceViewStruct) GetText() (text string) {
 
 // GetText: update css and set text to buffer.
 func (svs *SourceViewStruct) SetText(text string) {
+
 	svs.UpdateCss()
 	svs.Buffer.SetText(text)
 }
 
+// GetOccurences: Using TimeoutAdd function, callback will be executed
+// when occurences count is available.
+func (svs *SourceViewStruct) GetOccurences(callback func(occurences int)) {
+
+	glib.TimeoutAdd(uint(64), func() bool {
+
+		callback(svs.SearchCtx.GetOccurencesCount())
+
+		return svs.SearchCtx.GetOccurencesCount() < 0
+	})
+
+	/* example:
+	svs.GetOccurences(func(occ int) {
+		fmt.Println(occ)
+	})
+	*/
+}
+
+// RunAfterEvents: Execute event pending before f()
+// usually used when Gtk does not refresh in time and command
+// miss to be executed (ScrollTo ...)
+func (svs *SourceViewStruct) RunAfterEvents(f func()) {
+
+	for gtk.EventsPending() {
+		gtk.MainIteration() // Wait for pending events (until widget redrawn)
+	}
+
+	if f != nil {
+		f()
+	}
+	// glib.IdleAdd(func() {
+	// 	var count int
+	// 	glib.TimeoutAdd(uint(64), func() bool {
+	// 		count++
+	// 		svs.View.ScrollToIter(iter, 0.0, true, 0.5, 0.5)
+	// 		return count <= 5
+	// 	})
+	// })
+}
+
+// BringToFront: Set window position to be over all others windows
+// without staying on top whether another window come to be selected.
+func (svs *SourceViewStruct) BringToFront() {
+	if svs.Window != nil {
+		svs.Window.ToWindow().Deiconify()
+		svs.Window.ToWindow().ShowAll()
+		svs.Window.ToWindow().GrabFocus()
+	}
+}
+
 // IsExistSlice: if exist then  ...
-func IsExistSlice(slice []string, item string) bool {
+func isExistSlice(slice []string, item string) bool {
 	for _, mainRow := range slice {
 		if mainRow == item {
 			return true

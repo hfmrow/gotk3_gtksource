@@ -216,5 +216,5 @@ func _goAsyncReadyCallbacks(sourceObject *C.GObject, res *C.GAsyncResult, userDa
 		source = glib.Take(unsafe.Pointer(sourceObject))
 	}
 
-	r.fn(source, &glib.AsyncResult{glib.Take(unsafe.Pointer(res))}, r.userData)
+	r.fn(source, &glib.AsyncResult{glib.Take(unsafe.Pointer(res))})
 }
