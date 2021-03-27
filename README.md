@@ -1,3 +1,5 @@
+> **NOTICE**, (since 2021/03/27) current [gotk3_gtksource](https://github.com/hfmrow/gotk3_gtksource) version comply with new gotk3 requirements, (that mean gotk3 version must be > 0.5.2) so you have to use 'master branch' from gotk3 repository instead of [Release GOTK3 Version 0.5.2](https://github.com/gotk3/gotk3/releases/tag/v0.5.2).
+
 # Golang GtkSourceView binding for use with gotk3
 
 All this project was made under MIT license **\***
