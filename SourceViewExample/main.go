@@ -67,7 +67,7 @@ func mainApplication() {
 	// There is no obligation to use a structure, but in this case, for this example,
 	// i prefere using it for my convenience. All Operations are described in library
 	// to help you understand how to do.
-	if svs, err = SourceViewStructNew(mainObjects.Window, mainObjects.View, mainObjects.Map); err == nil {
+	if svs, err = SourceViewStructNew(mainObjects.View, mainObjects.Map, mainObjects.Window); err == nil {
 
 		// Loading default file to be displayed
 		mainObjects.FileChooserButton.SetFilename("main.go")
