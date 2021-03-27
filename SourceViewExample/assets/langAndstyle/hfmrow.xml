@@ -30,6 +30,7 @@
   <color name="dark_grey" value="#919191"/>
   <color name="light_grey" value="#E6E1D8"/>
   <color name="darkblue" value="#00007E"/>
+  <color name="bluesky" value="#AEF7FF"/>
   <color name="midblue" value="#18455E"/>
   <color name="steelblue3" value="#4f94cd"/>
   <color name="maroon" value="#5B3A17"/>
@@ -53,7 +54,7 @@
  <!-- Bracket Matching -->
   <style name="bracket-match" background="steelblue3"/>
   <style name="bracket-mismatch" background="maroon" bold="true"/>
-  <style name="search-match" foreground="white" background="steelblue3"/>
+  <style name="search-match" foreground="black" background="bluesky"/>
 
 <!-- Comments -->
   <style name="def:comment" foreground="orange"/>
