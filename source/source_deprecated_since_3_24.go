@@ -69,13 +69,3 @@ func SourceCompletionItemNewWithMarkup(markup, text string, icon *gdk.Pixbuf, in
 	}
 	return wrapSourceCompletionItem(glib.Take(unsafe.Pointer(c))), nil
 }
-
-// SourceCompletionItemNew2 is a wrapper around gtk_source_completion_item_new2().
-func SourceCompletionItemNew2() (*SourceCompletionItem, error) {
-	c := C.gtk_source_completion_item_new2()
-
-	if c == nil {
-		return nil, nilPtrErr
-	}
-	return wrapSourceCompletionItem(glib.Take(unsafe.Pointer(c))), nil
-}
