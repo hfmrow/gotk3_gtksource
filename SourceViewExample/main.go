@@ -1,16 +1,17 @@
 // main.go
 
 /*
-	Source file auto-generated on Mon, 12 Oct 2020 04:10:23 using Gotk3ObjHandler v1.6.5 ©2018-20 H.F.M
+	Source file auto-generated on Mon, 26 Apr 2021 08:45:09 using Gotk3 Objects Handler v1.7.8
+	©2018-21 hfmrow https://hfmrow.github.io
+
 	This software use gotk3 that is licensed under the ISC License:
 	https://github.com/gotk3/gotk3/blob/master/LICENSE
-*/
 
-/*******************************************************************************************************/
-/* NOTICE: Unless otherwise stated in the various sections, most of this file will not be modified    */
-/* during an update. This Gotk3ObjHandler's project format is intended to be an abbreviated version  */
-/* for demonstration purposes only and not for a full project.                                      */
-/***************************************************************************************************/
+	Copyright ©2020-21 hfmrow - Golang GtkSourceView binding for gotk3 github.com/hfmrow/gotk3_gtksource
+
+	This program comes with absolutely no warranty. See the The MIT License (MIT) for details:
+	https://opensource.org/licenses/mit-license.php
+*/
 
 package main
 
