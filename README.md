@@ -1,4 +1,4 @@
-> **NOTICE**, (since 2021/03/27) current [gotk3_gtksource](https://github.com/hfmrow/gotk3_gtksource) version comply with new gotk3 requirements, (that mean gotk3 version must be > 0.5.2) so you have to use [Go bindings for GTK3 @ master](https://github.com/gotk3/gotk3/tree/master) from gotk3 repository instead of [Release GOTK3 Version 0.5.2](https://github.com/gotk3/gotk3/releases/tag/v0.5.2).
+> **NOTICE**, (since 2021/03/27) current [gotk3_gtksource](https://github.com/hfmrow/gotk3_gtksource) version comply with new gotk3 requirements, (that mean gotk3 version must be > 0.5.2) so you have to use [Go bindings for GTK3 @ master](https://github.com/gotk3/gotk3/tree/master) from gotk3 repository instead of ~~[Release GOTK3 Version 0.5.2](https://github.com/gotk3/gotk3/releases/tag/v0.5.2)~~.
 > 
 > ---
 
@@ -41,18 +41,16 @@ This repository must be used with [gotk3: Go bindings for GTK3](https://github.c
 > $ sudo apt install libgtksourceview-4-dev
 > ```
 
-> *To install targeting your version of GtkSourceView:*
+> > **To install targeting your version of GtkSourceView:***
 > 
 > ```shell
->     $ go get -tags gtksourceview_4 github.com/hfmrow/gotk3_gtksource/source
-> or:
->     $ go get -tags gtksourceview_3_18 github.com/hfmrow/gotk3_gtksource/source
+> $ go install -tags gtksourceview_X_XX github.com/hfmrow/gotk3_gtksource/...
 > ```
 > 
-> *To rebuild the package for another GtkSourceView version:*
+> > **To rebuild the package for current GtkSourceView version 4+:**
 > 
 > ```shell
-> $ go install -tags gtksourceview_X_XX github.com/hfmrow/gotk3_gtksource/source
+> $ go install github.com/hfmrow/gotk3_gtksource/...
 > ```
 
 ### Gotk3 GtkSourceView wrapping progression
@@ -161,7 +159,7 @@ This repository must be used with [gotk3: Go bindings for GTK3](https://github.c
 
 ---
 
-#### Informations, Documentation: [GtkSourceView](https://developer.gnome.org/gtksourceview/4.2/)
+#### information, Documentation: [GtkSourceView](https://developer.gnome.org/gtksourceview/4.2/)
 
 ---
 
