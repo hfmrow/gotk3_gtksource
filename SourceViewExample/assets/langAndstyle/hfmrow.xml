@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Copyright (C) 2006-2007 Will Farrington <wcfarrington@gmail.com>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<style-scheme id="hfmrow" _name="HFMROW" version="1.0">
+  <author>H.F.M</author>
+  <_description>Color scheme created for liteIde ported to SourceView</_description>
+
+<!-- Colors -->
+
+  <color name="white" value="#EEEEEE"/>
+  <color name="black" value="#1A1A1A"/>
+  <color name="dark_grey" value="#919191"/>
+  <color name="light_grey" value="#E6E1D8"/>
+  <color name="darkblue" value="#00007E"/>
+  <color name="bluesky" value="#AEF7FF"/>
+  <color name="midblue" value="#18455E"/>
+  <color name="steelblue3" value="#4f94cd"/>
+  <color name="maroon" value="#5B3A17"/>
+  <color name="purple" value="#450099"/>
+  <color name="orange" value="#D85612"/>
+  <color name="green" value="#0E6200"/>
+  <color name="dark_green" value="#7F0079"/>
+  <color name="red" value="#e80023"/>
+  <color name="fuchsia" value="#91003B"/>
+  <color name="dark_red" value="#570000"/>
+  <color name="purple_red" value="#E41E34"/>
+  <color name="cyan" value="#027474"/>
+
+<!-- Global Settings -->
+
+  <style name="text" foreground="black" background="white"/>
+  <style name="cursor" foreground="black"/>
+  <style name="current-line" background="light_grey"/>
+  <style name="line-numbers" foreground="cyan" background="light_grey"/>
+
+ <!-- Bracket Matching -->
+  <style name="bracket-match" background="steelblue3"/>
+  <style name="bracket-mismatch" background="maroon" bold="true"/>
+  <style name="search-match" foreground="black" background="bluesky"/>
+
+<!-- Comments -->
+  <style name="def:comment" foreground="orange"/>
+  <style name="def:shebang" foreground="dark_grey"/>
+  <style name="def:doc-comment-element" foreground="steelblue3"/>
+
+<!-- Constants and Variables-->
+  <style name="def:constant" foreground="black"/>
+  <style name="def:string" foreground="green"/>
+  <style name="def:special-char" foreground="maroon" bold="true"/>
+  <style name="def:special-constant" foreground="dark_green" bold="true"/>
+  <style name="def:number" foreground="purple"/>
+  <style name="def:boolean" foreground="dark_red" bold="true"/>
+  <style name="def:floating-point" foreground="black"/>
+  <style name="def:keyword" foreground="darkblue" bold="true"/>
+  <style name="def:builtin" foreground="purple" bold="true"/>
+  <style name="def:variable" foreground="black"/>
+  <style name="def:function" foreground="midblue" bold="true"/>
+  <style name="def:preprocessor" foreground="darkblue" bold="true"/>
+
+<!-- Identifiers -->
+  <style name="def:identifier" foreground="red"/>
+
+<!-- Statements -->
+  <style name="def:statement" foreground="orange"/>
+
+<!-- Types -->
+  <style name="def:type" foreground="green" bold="true"/>
+
+<!-- Others -->
+  <style name="def:error" foreground="white" background="maroon" bold="true"/>
+  <style name="def:note" foreground="purple_red" background="white" bold="true" italic="false"/>
+  <style name="def:net-address-in-comment" foreground="steelblue3" italic="false" underline="true"/>
+
+
+<!-- Unknown? -->
+  <style name="def:specials" background="orange"/>
+
+<!-- C Styles -->
+  <style name="c:preprocessor" map-to="def:special-char"/>
+
+<!-- Diff Styles -->
+  <style name="diff:ignore" foreground="dark_grey"/>
+
+<!-- Ruby Styles -->
+  <style name="ruby:module-handler" foreground="purple"/>
+  <style name="ruby:symbol" foreground="black"/>
+  <style name="ruby:regex" foreground="green"/>
+
+<!-- SH Styles -->
+  <style name="sh:others" map-to="text"/>
+
+<!-- XML Styles -->
+  <style name="xml:attribute-name" foreground="purple"/>
+  <style name="xml:element-name" foreground="maroon"/>
+
+</style-scheme>
