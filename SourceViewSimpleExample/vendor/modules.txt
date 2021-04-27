@@ -1,0 +1,13 @@
+# github.com/gotk3/gotk3 v0.5.3-0.20210416043928-29f29f77ebb2
+## explicit
+github.com/gotk3/gotk3/cairo
+github.com/gotk3/gotk3/gdk
+github.com/gotk3/gotk3/glib
+github.com/gotk3/gotk3/gtk
+github.com/gotk3/gotk3/internal/callback
+github.com/gotk3/gotk3/internal/closure
+github.com/gotk3/gotk3/internal/slab
+github.com/gotk3/gotk3/pango
+# github.com/hfmrow/gotk3_gtksource v0.9.9
+## explicit
+github.com/hfmrow/gotk3_gtksource/source

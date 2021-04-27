@@ -8,7 +8,6 @@ package gtk3Import
 
 import (
 	"io/ioutil"
-	"log"
 
 	"github.com/gotk3/gotk3/gdk"
 	"github.com/gotk3/gotk3/gtk"
@@ -16,18 +15,23 @@ import (
 
 // CssWidgetLoad: Load or read from data and apply css to
 // widget if it's provided. Apply to screen otherwise.
-func CssWdgScnLoad(filename string, wdgt ...*gtk.Widget) {
-	var err error
-	var cssProv *gtk.CssProvider
-	data := filename
+func CssWdgScnLoad(filename string, wdgt ...*gtk.Widget) (err error) {
 
-	if bytes, err := ioutil.ReadFile(filename); err == nil {
-		data = string(bytes)
+	data := []byte(filename)
+
+	if data, err = ioutil.ReadFile(filename); err == nil {
+		err = CssWdgScnBytes(data, wdgt...)
 	}
+	return
+}
+
+func CssWdgScnBytes(data []byte, wdgt ...*gtk.Widget) (err error) {
+
+	var cssProv *gtk.CssProvider
 
 	if cssProv, err = gtk.CssProviderNew(); err == nil {
 
-		if err = cssProv.LoadFromData(data); err == nil {
+		if err = cssProv.LoadFromData(string(data)); err == nil {
 			if len(wdgt) == 0 {
 				var screen *gdk.Screen
 				if screen, err = gdk.ScreenGetDefault(); err == nil {
@@ -41,32 +45,5 @@ func CssWdgScnLoad(filename string, wdgt ...*gtk.Widget) {
 			}
 		}
 	}
-	if err != nil {
-		log.Printf("CssWdgScnLoad: %s\n", err.Error())
-	}
+	return
 }
-
-/*
- #MainTextViewEditorText * {
-	color: shade (#332211, 1.06);
-	background-color: #fefefe;
-	opacity: 0.99;
-}
-
- #MainTextViewEditorText text selection {
-	background-color: #aaddff;
-	color:shade (#332211, 1.06);
-}
-
- #MainTextViewEditorNumbers * {
-	color: shade (#0033ff, 1.06);
-	background-color: #eeeeee;
-	opacity: 0.99;
-}
-
- #MainTextViewEditorNumbers text {
-	color: shade (#0022ff, 1.06);
-	background-color: #eeeeee;
-	opacity: 0.99;
-}
-*/
